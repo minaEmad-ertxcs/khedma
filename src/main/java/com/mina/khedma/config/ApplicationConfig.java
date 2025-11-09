@@ -54,8 +54,8 @@ public class ApplicationConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name())
-                                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name())
+                                .requestMatchers("/api/v1/admin/**").hasAnyRole(ADMIN.name())
+                                .requestMatchers(GET, "/api/v1/admin/**").hasAnyAuthority(ADMIN_READ.name())
                                 .anyRequest()
                                 .authenticated())
                 .httpBasic(Customizer.withDefaults())
