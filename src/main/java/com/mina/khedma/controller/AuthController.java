@@ -1,7 +1,7 @@
 package com.mina.khedma.controller;
 
 import com.mina.khedma.model.UserRequest;
-import com.mina.khedma.service.UserService;
+import com.mina.khedma.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final UserService service;
+    private final AuthService authService;
 
-    public AuthController(UserService service) {
-        this.service = service;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody UserRequest userRequest) {
-        return service.register(userRequest);
+        return authService.register(userRequest);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserRequest userRequest) {
-        return service.login(userRequest);
+        return authService.login(userRequest);
     }
 }

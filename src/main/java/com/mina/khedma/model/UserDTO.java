@@ -9,8 +9,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Student {
+public class UserDTO {
     private int id;
-    private String name;
-    private int marks;
+    private String username;
+    private String role;
 }

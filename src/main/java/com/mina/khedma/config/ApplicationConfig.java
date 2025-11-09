@@ -1,7 +1,6 @@
 package com.mina.khedma.config;
 
 import com.mina.khedma.utilities.ApplicationAuditAware;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
