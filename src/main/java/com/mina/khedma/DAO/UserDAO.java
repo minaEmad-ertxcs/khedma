@@ -4,6 +4,8 @@ import com.mina.khedma.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -23,5 +25,8 @@ public class UserDAO {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<TokenDAO> tokens;
 
 }
