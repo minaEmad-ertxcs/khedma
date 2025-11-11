@@ -5,8 +5,6 @@ import { Component, viewChild } from '@angular/core';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ProductSaleComponent } from './product-sale/product-sale.component';
 
-// 3rd party import
-
 import { ApexOptions, ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 @Component({
   selector: 'app-dash-analytics',

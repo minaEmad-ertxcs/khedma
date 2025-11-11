@@ -23,6 +23,10 @@ const routes: Routes = [
         loadComponent: () => import('./demo/dashboard/dash-analytics.component').then((c) => c.DashAnalyticsComponent)
       },
       {
+        path: 'users',
+        loadComponent: () => import('./demo/users/users').then((c) => c.Users)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },

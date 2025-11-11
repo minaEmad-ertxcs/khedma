@@ -1,0 +1,82 @@
+<div class="row">
+
+    @for (card of cards; track card) {
+    <div class="col-md-6 col-xl-3">
+        <app-card [hidHeader]="true" cardClass="{{ card.background }} order-card">
+            <h6 class="text-white">{{ card.title }}</h6>
+            <h2 class="text-end text-white">
+                <i class="feather {{ card.icon }} float-start"></i>
+                <span>{{ card.number }}</span>
+            </h2>
+            <p class="m-b-0">
+                {{ card.text }}
+                <span class="float-end">{{ card.no }}</span>
+            </p>
+        </app-card>
+    </div>
+    }
+
+    <!-- https://getcssscan.com/css-checkboxes-examples -->
+
+    <div class="col-xl-12">
+        <app-card cardTitle="Al Makhdomen" [options]="false" blockClass="table-border-style">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full name</th>
+                            <th>Mobile phone</th>
+                            <th>Birthday</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mina emad</td>
+                            <td>01125037505</td>
+                            <td>23-5-2001</td>
+                            <td>
+                                <div class="checkbox-wrapper-18">
+                                    <div class="round">
+                                        <input type="checkbox" id="checkbox-18" />
+                                        <label for="checkbox-18"></label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Mina emad</td>
+                            <td>01125037505</td>
+                            <td>23-5-2001</td>
+                            <td>
+                                <div class="checkbox-wrapper-31">
+                                    <input type="checkbox" />
+                                    <svg viewBox="0 0 35.6 35.6">
+                                        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                    </svg>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Mina emad</td>
+                            <td>01125037505</td>
+                            <td>23-5-2001</td>
+                            <td>
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" id="cbtest-19" />
+                                    <label for="cbtest-19" class="check-box"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

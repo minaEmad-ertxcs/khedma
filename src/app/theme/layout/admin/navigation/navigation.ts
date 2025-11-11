@@ -34,6 +34,21 @@ export const NavigationItems: NavigationItem[] = [
       }
     ]
   },
+    {
+    id: 'attendance',
+    title: 'Attendance',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'ma5domen',
+        title: 'Al Makhdomen',
+        type: 'item',
+        url: '/users',
+        icon: 'feather icon-users'
+      }
+    ]
+  },
   {
     id: 'ui-component',
     title: 'Ui Component',
@@ -86,32 +101,32 @@ export const NavigationItems: NavigationItem[] = [
       }
     ]
   },
-  {
-    id: 'Authentication',
-    title: 'Authentication',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
-        id: 'signup',
-        title: 'Sign up',
-        type: 'item',
-        url: '/register',
-        icon: 'feather icon-at-sign',
-        target: true,
-        breadcrumbs: false
-      },
-      {
-        id: 'signin',
-        title: 'Sign in',
-        type: 'item',
-        url: '/login',
-        icon: 'feather icon-log-in',
-        target: true,
-        breadcrumbs: false
-      }
-    ]
-  },
+  // {
+  //   id: 'Authentication',
+  //   title: 'Authentication',
+  //   type: 'group',
+  //   icon: 'icon-group',
+  //   children: [
+  //     {
+  //       id: 'signup',
+  //       title: 'Sign up',
+  //       type: 'item',
+  //       url: '/register',
+  //       icon: 'feather icon-at-sign',
+  //       target: true,
+  //       breadcrumbs: false
+  //     },
+  //     {
+  //       id: 'signin',
+  //       title: 'Sign in',
+  //       type: 'item',
+  //       url: '/login',
+  //       icon: 'feather icon-log-in',
+  //       target: true,
+  //       breadcrumbs: false
+  //     }
+  //   ]
+  // },
   {
     id: 'chart',
     title: 'Chart',
@@ -166,42 +181,42 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         icon: 'feather icon-sidebar'
       },
-      {
-        id: 'menu-level',
-        title: 'Menu Levels',
-        type: 'collapse',
-        icon: 'feather icon-menu',
-        children: [
-          {
-            id: 'menu-level-2.1',
-            title: 'Menu Level 2.1',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'menu-level-2.2',
-            title: 'Menu Level 2.2',
-            type: 'collapse',
-            children: [
-              {
-                id: 'menu-level-2.2.1',
-                title: 'Menu Level 2.2.1',
-                type: 'item',
-                url: 'javascript:',
-                external: true
-              },
-              {
-                id: 'menu-level-2.2.2',
-                title: 'Menu Level 2.2.2',
-                type: 'item',
-                url: 'javascript:',
-                external: true
-              }
-            ]
-          }
-        ]
-      }
+      // {
+      //   id: 'menu-level',
+      //   title: 'Menu Levels',
+      //   type: 'collapse',
+      //   icon: 'feather icon-menu',
+      //   children: [
+      //     {
+      //       id: 'menu-level-2.1',
+      //       title: 'Menu Level 2.1',
+      //       type: 'item',
+      //       url: 'javascript:',
+      //       external: true
+      //     },
+      //     {
+      //       id: 'menu-level-2.2',
+      //       title: 'Menu Level 2.2',
+      //       type: 'collapse',
+      //       children: [
+      //         {
+      //           id: 'menu-level-2.2.1',
+      //           title: 'Menu Level 2.2.1',
+      //           type: 'item',
+      //           url: 'javascript:',
+      //           external: true
+      //         },
+      //         {
+      //           id: 'menu-level-2.2.2',
+      //           title: 'Menu Level 2.2.2',
+      //           type: 'item',
+      //           url: 'javascript:',
+      //           external: true
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // }
     ]
   }
 ];
