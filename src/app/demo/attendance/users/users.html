@@ -20,6 +20,11 @@
 
     <div class="col-xl-12"> <!-- option 1 -->
         <app-card cardTitle="Al Makhdomen" [options]="false" blockClass="table-border-style">
+
+            <div class="mb-3 d-flex justify-content-start">
+                <input type="text" class="form-control w-25" placeholder="Search by name..." [(ngModel)]="searchTerm" />
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -28,7 +33,7 @@
                             <th>Full name</th>
                             <th>Mobile phone</th>
                             <th>Birth date</th>
-                            <th>Image</th>
+                            <th>Attended?</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +48,13 @@
                                     <input type="checkbox" id="{{ user.id }}" [(ngModel)]="user.isAttended" />
                                     <label for="{{ user.id }}" class="check-box"></label>
                                 </div>
+                            </td>
+                        </tr>
+                        }
+                        @empty {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                No users found.
                             </td>
                         </tr>
                         }
@@ -82,7 +94,7 @@
                             <th>Full name</th>
                             <th>Mobile phone</th>
                             <th>Birth date</th>
-                            <th>Image</th>
+                            <th>Attended?</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,6 +111,13 @@
                                         <label for="{{ user.id }}"></label>
                                     </div>
                                 </div>
+                            </td>
+                        </tr>
+                        }
+                        @empty {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                No users found.
                             </td>
                         </tr>
                         }

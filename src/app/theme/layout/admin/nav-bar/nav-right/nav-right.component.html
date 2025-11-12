@@ -1,5 +1,6 @@
 <ul class="navbar-nav ms-auto">
-  <li>
+  <!-- Notifications -->
+  <!-- <li>
     <div class="dropdown" ngbDropdown placement="auto">
       <a ngbDropdownToggle href="javascript:">
         <i class="icon feather icon-bell" title="Notification"></i>
@@ -71,24 +72,27 @@
         </div>
       </div>
     </div>
-  </li>
-  <li (click)="this.visibleUserList = !this.visibleUserList">
+  </li> -->
+
+  <!-- Messages -->
+  <!-- <li (click)="this.visibleUserList = !this.visibleUserList">
     <div class="dropdown">
       <a href="javascript:" class="displayChatbox dropdown-toggle">
         <i class="icon feather icon-mail" title="Mail InBox"></i>
         <span class="badge bg-success"><span class="sr-only"></span></span>
       </a>
     </div>
-  </li>
+  </li> -->
+
   <li>
     <div class="dropdown drp-user" ngbDropdown placement="auto">
       <a href="javascript:" ngbDropdownToggle>
-        <img src="assets/images/user/avatar-1.jpg" class="img-radius wid-40" alt="User-Profile-Image" />
+        <img src="assets/images/user/avatar-4.jpg" class="img-radius wid-40" alt="User-Profile-Image" />
       </a>
       <div class="dropdown-menu dropdown-menu-end profile-notification" ngbDropdownMenu>
         <div class="pro-head">
-          <img src="assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image" />
-          <span>John Doe</span>
+          <img src="assets/images/user/avatar-4.jpg" class="img-radius" alt="User-Profile-Image" />
+          <span>Mina Emad</span>
           <a href="javascript:" class="dud-logout" title="Logout">
             <i class="feather icon-log-out"></i>
           </a>
@@ -100,18 +104,18 @@
               Profile
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="javascript:" class="dropdown-item">
               <i class="feather icon-mail"></i>
               My Messages
             </a>
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <a href="javascript:" class="dropdown-item">
               <i class="feather icon-lock"></i>
               Lock Screen
             </a>
-          </li>
+          </li> -->
           <li>
             <a href="javascript:" class="dropdown-item" (click)="logout()">
               <i class="feather icon-lock"></i>
@@ -125,28 +129,27 @@
 </ul>
 
 @if (visibleUserList) {
-  <section class="header-user-list" [ngClass]="{ open: visibleUserList }" [@slideInOutLeft]>
-    <app-chat-user-list
-      (ChatToggle)="onChatToggle($event)"
-      (ChatCollapse)="this.visibleUserList = !this.visibleUserList; this.chatMessage = false"
-    />
-  </section>
+<section class="header-user-list" [ngClass]="{ open: visibleUserList }" [@slideInOutLeft]>
+  <app-chat-user-list (ChatToggle)="onChatToggle($event)"
+    (ChatCollapse)="this.visibleUserList = !this.visibleUserList; this.chatMessage = false" />
+</section>
 }
+
 @if (chatMessage) {
-  <section class="header-chat" [ngClass]="{ open: chatMessage }" [@slideInOutLeft]>
-    <app-chat-msg (ChatToggle)="this.chatMessage = !this.chatMessage" [friendId]="friendId" />
-  </section>
+<section class="header-chat" [ngClass]="{ open: chatMessage }" [@slideInOutLeft]>
+  <app-chat-msg (ChatToggle)="this.chatMessage = !this.chatMessage" [friendId]="friendId" />
+</section>
 }
+
 @if (visibleUserList) {
-  <section class="header-user-list" [ngClass]="{ open: visibleUserList }" [@slideInOutRight]>
-    <app-chat-user-list
-      (ChatToggle)="onChatToggle($event)"
-      (ChatCollapse)="this.visibleUserList = !this.visibleUserList; this.chatMessage = false"
-    />
-  </section>
+<section class="header-user-list" [ngClass]="{ open: visibleUserList }" [@slideInOutRight]>
+  <app-chat-user-list (ChatToggle)="onChatToggle($event)"
+    (ChatCollapse)="this.visibleUserList = !this.visibleUserList; this.chatMessage = false" />
+</section>
 }
+
 @if (chatMessage) {
-  <section class="header-chat" [ngClass]="{ open: chatMessage }" [@slideInOutRight]>
-    <app-chat-msg (ChatToggle)="this.chatMessage = !this.chatMessage" [friendId]="friendId" />
-  </section>
+<section class="header-chat" [ngClass]="{ open: chatMessage }" [@slideInOutRight]>
+  <app-chat-msg (ChatToggle)="this.chatMessage = !this.chatMessage" [friendId]="friendId" />
+</section>
 }

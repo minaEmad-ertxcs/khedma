@@ -3,7 +3,7 @@ import { Component, viewChild } from '@angular/core';
 
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
-import { ApexOptions, ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-users',
@@ -12,15 +12,17 @@ import { ApexOptions, ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
   styleUrl: './users.scss'
 })
 export class Users {
-  pages: any;
-  totalPages: any;
-  pageLimit: number = 3;
+  // configs
   currentPage: number = 1;
+  pageLimit: number = 3;
+
+  // vars
+  pages: any;
+  searchTerm = '';
   totalElements: number = 0;
 
   constructor() {
     this.totalElements = this.users.length;
-    this.totalPages = Math.ceil(this.totalElements / this.pageLimit);
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
 
     console.log("totalPages: " + this.totalPages);
@@ -154,7 +156,28 @@ export class Users {
 
   get pagedUsers() {
     const start = (this.currentPage - 1) * this.pageLimit;
-    return this.users.slice(start, start + this.pageLimit);
+    return this.filteredUsers.slice(start, start + this.pageLimit);
+  }
+
+  get filteredUsers() {
+    if (!this.searchTerm.trim())
+      return this.users;
+
+    console.log("Search for " + this.searchTerm);
+
+    return this.users.filter(user =>
+      user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  get totalPages() {
+    return Math.ceil(this.filteredUsers.length / this.pageLimit);
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 
   goToPage(page: number) {
@@ -165,12 +188,6 @@ export class Users {
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
     }
   }
 }

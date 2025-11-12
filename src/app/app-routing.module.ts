@@ -24,7 +24,11 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        loadComponent: () => import('./demo/users/users').then((c) => c.Users)
+        loadComponent: () => import('./demo/attendance/users/users').then((c) => c.Users)
+      },
+      {
+        path: 'takeAttendance',
+        loadComponent: () => import('./demo/attendance/take-attendance/take-attendance').then((c) => c.TakeAttendance)
       },
       {
         path: 'component',

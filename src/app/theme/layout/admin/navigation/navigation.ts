@@ -34,7 +34,7 @@ export const NavigationItems: NavigationItem[] = [
       }
     ]
   },
-    {
+  {
     id: 'attendance',
     title: 'Attendance',
     type: 'group',
@@ -45,8 +45,17 @@ export const NavigationItems: NavigationItem[] = [
         title: 'Al Makhdomen',
         type: 'item',
         url: '/users',
+        classes: 'nav-item',
         icon: 'feather icon-users'
-      }
+      },
+      {
+        id: 'takeAttendance',
+        title: 'Take attendence',
+        type: 'item',
+        url: '/takeAttendance',
+        classes: 'nav-item',
+        icon: 'feather icon-file-text'
+      },
     ]
   },
   {
