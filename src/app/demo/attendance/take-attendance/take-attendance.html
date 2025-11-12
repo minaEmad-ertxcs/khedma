@@ -1,57 +1,71 @@
 <div class="row">
     <div class="col-xl-12"> <!-- option 1 -->
         <app-card cardTitle="Take attendance" [options]="false" blockClass="table-border-style">
-            <div class="d-flex mb-3 align-items-center gap-3">
-                <select class="form-control w-25" [(ngModel)]="selectedMonth">
-                    <option value="" disabled selected>Select Month</option>
-                    <option *ngFor="let m of months; let i = index" [value]="i">{{ m }}</option>
-                </select>
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="d-flex flex-column">
+                    <label for="startDate" class="form-label fw-bold">Start Date</label>
+                    <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" name="startDate" />
+                </div>
 
-                <select class="form-control w-25" [(ngModel)]="selectedYear">
-                    <option value="" disabled selected>Select Year</option>
-                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
-                </select>
+                <div class="d-flex flex-column">
+                    <label for="endDate" class="form-label fw-bold">End Date</label>
+                    <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" name="endDate" />
+                </div>
 
-                <button class="btn btn-primary" (click)="getUsers()">Get Users</button>
+                <button class="btn btn-primary mt-3" (click)="getUsers()">
+                    Search
+                </button>
             </div>
 
             <hr>
 
-            <div class="d-flex justify-content-start">
-                <input type="text" class="form-control w-25" placeholder="Search by name..." [(ngModel)]="searchTerm" />
+            @if (isLoading) {
+            <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+                <div class="text-muted text-center">
+                    <span class="loader"></span>
+                </div>
             </div>
+            }
 
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Full name</th>
+            <div *ngIf="users.length > 0; else noUsers">
 
-                            @for (record of pagedUsers[0].records; track record) {
-                            <th>{{ record.date }}</th>
+                @if (!isLoading) {
+                <div class="d-flex justify-content-start">
+                    <input type="text" class="form-control w-25" placeholder="Search by name..."
+                        [(ngModel)]="searchTerm" />
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full name</th>
+
+                                @for (record of pagedUsers[0].records; track record) {
+                                <th>{{ record.date }}</th>
+                                }
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (user of pagedUsers; track user) {
+                            <tr>
+                                <th>{{ user.id }}</th>
+                                <td>{{ user.fullName }}</td>
+
+                                @for (record of user.records; track record) {
+                                <td>
+                                    <div class="checkbox-wrapper-19">
+                                        <input type="checkbox" id="{{ user.id }}-{{ record.date }}"
+                                            [(ngModel)]="record.isPresent" />
+                                        <label for="{{ user.id }}-{{ record.date }}" class="check-box"></label>
+                                    </div>
+                                </td>
+                                }
+                            </tr>
                             }
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (user of pagedUsers; track user) {
-                        <tr>
-                            <th>{{ user.id }}</th>
-                            <td>{{ user.fullName }}</td>
-
-                            @for (record of user.records; track record) {
-                            <td>
-                                <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" id="{{ user.id }}-{{ record.date }}"
-                                        [(ngModel)]="record.isPresent" />
-                                    <label for="{{ user.id }}-{{ record.date }}" class="check-box"></label>
-                                </div>
-                            </td>
-                            }
-                        </tr>
-                        }
-                        <!-- @for (user of pagedUsers; track user) {
+                            <!-- @for (user of pagedUsers; track user) {
                         <tr>
                             <th scope="row">{{ user.id }}</th>
                             <td>{{ user.fullName }}</td>
@@ -67,36 +81,44 @@
                         
                         </tr>
                         } -->
-                        @empty {
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">
-                                No users found.
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled" [class.disabled]="currentPage === 1">
-                            <a class="page-link" href="javascript:" (click)="prevPage()">Previous</a>
-                        </li>
+                            @empty {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    No users found.
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled" [class.disabled]="currentPage === 1">
+                                <a class="page-link" href="javascript:" (click)="prevPage()">Previous</a>
+                            </li>
 
-                        @for (page of pages; track page) {
-                        <li class="page-item">
-                            <a class="page-link" href="javascript:" [class.active]="page === currentPage"
-                                (click)="goToPage(page)">
-                                {{ page }}
-                            </a>
-                        </li>
-                        }
+                            @for (page of pages; track page) {
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:" [class.active]="page === currentPage"
+                                    (click)="goToPage(page)">
+                                    {{ page }}
+                                </a>
+                            </li>
+                            }
 
-                        <li class=" page-item" [class.disabled]="currentPage === totalPages">
-                            <a class="page-link" href="javascript:" (click)="nextPage()">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                            <li class=" page-item" [class.disabled]="currentPage === totalPages">
+                                <a class="page-link" href="javascript:" (click)="nextPage()">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                }
             </div>
+
+            <ng-template #noUsers>
+                <div class="text-center text-muted py-5 border rounded bg-light">
+                    <h5>No users found</h5>
+                </div>
+            </ng-template>
         </app-card>
     </div>
 </div>

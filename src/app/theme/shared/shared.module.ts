@@ -12,8 +12,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import 'hammerjs';
 import 'mousetrap';
 
-
-import { NgbDropdownModule, NgbNavModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbNavModule, NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -25,7 +24,8 @@ import { NgbDropdownModule, NgbNavModule, NgbModule } from '@ng-bootstrap/ng-boo
     NgbDropdownModule,
     NgbNavModule,
     NgbModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    NgbAlertModule
   ],
   exports: [
     CommonModule,
@@ -40,4 +40,4 @@ import { NgbDropdownModule, NgbNavModule, NgbModule } from '@ng-bootstrap/ng-boo
   ],
   declarations: []
 })
-export class SharedModule {}
+export class SharedModule { }

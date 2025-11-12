@@ -27,7 +27,7 @@ export class NavContentComponent implements OnInit {
 
   NavMobCollapse = output();
 
-  
+
   constructor() {
     this.navigation = NavigationItems;
     this.windowWidth = window.innerWidth;
@@ -35,15 +35,18 @@ export class NavContentComponent implements OnInit {
     this.contentWidth = 0;
   }
 
-  // life cycle event
   ngOnInit() {
     if (this.windowWidth < 992) {
       setTimeout(() => {
         document.querySelector('.pcoded-navbar')?.classList.add('menupos-static');
-        (document.querySelector('#nav-ps-gradient-able') as HTMLElement).style.height = '100%';
+        const navGradient = document.querySelector('#nav-ps-gradient-able') as HTMLElement | null;
+        if (navGradient) {
+          navGradient.style.height = '100%';
+        }
       }, 500);
     }
   }
+
 
   fireLeave() {
     const sections = document.querySelectorAll('.pcoded-hasmenu');
