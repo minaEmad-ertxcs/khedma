@@ -4,6 +4,8 @@ import { Component, viewChild } from '@angular/core';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user-service';
 
 @Component({
   selector: 'app-users',
@@ -21,7 +23,7 @@ export class Users {
   searchTerm = '';
   totalElements: number = 0;
 
-  constructor() {
+  constructor(private router: Router, private userService: UserService) {
     this.totalElements = this.users.length;
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
 
@@ -190,14 +192,18 @@ export class Users {
       this.currentPage++;
     }
   }
+
   onUpdate(user: any) {
-    console.log('Update user:', user);
-    // Add your update logic here
+    console.log('Navigating to user details:', user);
+
+    this.userService.setUser(user);
+
+    this.router.navigate(['/user-details', user.id]);
   }
 
   onDelete(user: any) {
     const confirmDelete = confirm(`Are you sure you want to delete ${user.fullName}?`);
-    
+
     if (confirmDelete) {
       console.log('Deleted user:', user);
       // Add your delete logic here

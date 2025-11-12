@@ -1,0 +1,19 @@
+<div class="row">
+    @if (user) {
+    <div class="card p-4">
+        <h3>User Details</h3>
+        <p><strong>ID:</strong> {{ user.id }}</p>
+        <p><strong>Name:</strong> {{ user.fullName }}</p>
+        <p><strong>Mobile:</strong> {{ user.mobilePhone }}</p>
+        <p><strong>Birth Date:</strong> {{ user.birthDate }}</p>
+    </div>
+    }
+
+    @if (!user) {
+    <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="text-muted text-center">
+            <span class="loader"></span>
+        </div>
+    </div>
+    }
+</div>

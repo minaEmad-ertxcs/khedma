@@ -31,6 +31,10 @@ const routes: Routes = [
         loadComponent: () => import('./demo/attendance/take-attendance/take-attendance').then((c) => c.TakeAttendance)
       },
       {
+        path: 'user-details/:id',
+        loadComponent: () => import('./demo/pages/user-details/user-details').then((c) => c.UserDetails)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },
