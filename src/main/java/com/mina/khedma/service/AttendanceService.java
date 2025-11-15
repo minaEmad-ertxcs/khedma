@@ -37,7 +37,7 @@ public class AttendanceService {
     }
 
     public Page<UserAttendanceDTO> getAllAttendancesByRange(Pageable pageable, DateRangeRequest request) throws BadRequestException {
-        if (request.getStartDate() == null && request.getEndDate() == null) {
+        if (request.getStartDate() == null || request.getEndDate() == null) {
             throw new BadRequestException("Start date and end date must not be null");
         }
 
