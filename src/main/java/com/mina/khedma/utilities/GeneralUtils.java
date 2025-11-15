@@ -3,7 +3,7 @@ package com.mina.khedma.utilities;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class Utility {
+public class GeneralUtils {
 
     public static HttpStatus OK_STATUS = HttpStatus.OK;
     public static HttpStatus ISE_STATUS = HttpStatus.INTERNAL_SERVER_ERROR;

@@ -3,17 +3,14 @@ package com.mina.khedma.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class UserDTO {
-    private int id;
+public class UserAttendanceDTO {
+    private Integer id;
     private String username;
-    private String mobileNumber;
-    private String brithDate;
-    private String grade;
-    private String role;
+    private List<AttendanceDTO> attendance;
 }

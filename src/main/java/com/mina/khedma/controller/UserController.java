@@ -1,5 +1,7 @@
 package com.mina.khedma.controller;
 
+import com.mina.khedma.model.DateDTO;
+import com.mina.khedma.model.UserAttendanceDTO;
 import com.mina.khedma.model.UserDTO;
 import com.mina.khedma.service.UserService;
 import org.springframework.data.domain.Page;
@@ -31,5 +33,10 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserDTO>> getAllUsers(Pageable pageable) {
         return ok(userService.getAllUsers(pageable));
+    }
+
+    @GetMapping("/attendances")
+    public ResponseEntity<Page<UserAttendanceDTO>> getAllAttendances(Pageable pageable, DateDTO dateDTO) {
+        return ok(userService.getAllAttendances(pageable, dateDTO));
     }
 }

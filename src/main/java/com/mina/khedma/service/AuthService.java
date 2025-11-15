@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.mina.khedma.utilities.Utility.*;
+import static com.mina.khedma.utilities.GeneralUtils.*;
 
 @Service
 public class AuthService {

@@ -17,6 +17,9 @@ public class UserMapper {
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         dto.setRole(user.getRole().name().toLowerCase(Locale.ROOT));
+        dto.setMobileNumber(user.getMobileNumber());
+        dto.setBrithDate(user.getBirthDate().toString());
+        dto.setGrade(user.getGrade());
         return dto;
     }
 
