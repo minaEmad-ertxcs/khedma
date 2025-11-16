@@ -351,6 +351,54 @@ export class TakeAttendance {
           {
             date: "28-11-2025",
             isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
+          },
+          {
+            date: "28-11-2025",
+            isPresent: false
           }
         ]
       },

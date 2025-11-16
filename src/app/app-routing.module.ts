@@ -50,10 +50,10 @@ const routes: Routes = [
         path: 'tables',
         loadComponent: () => import('./demo/tables/tbl-bootstrap/tbl-bootstrap.component').then((c) => c.TblBootstrapComponent)
       },
-      {
-        path: 'sample-page',
-        loadComponent: () => import('./demo/other/sample-page/sample-page.component').then((c) => c.SamplePageComponent)
-      }
+      // {
+      //   path: 'sample-page',
+      //   loadComponent: () => import('./demo/other/sample-page/sample-page.component').then((c) => c.SamplePageComponent)
+      // }
     ]
   },
   {
