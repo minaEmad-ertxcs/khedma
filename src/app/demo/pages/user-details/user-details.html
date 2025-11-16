@@ -18,9 +18,33 @@
     }
 </div> -->
 <div class="row">
-    <app-card cardTitle="Edit user" [options]="false" blockClass="table-border-style">
-        <form action=" javascript:" class="needs-validation" novalidate>
-            <div class="row">
+    <app-card cardTitle="Profile picture" [options]="false" blockClass="table-border-style" class="col-md-4">
+        <!-- <form enctype="multipart/form-data" class="d-flex justify-content-center">
+            <label for="fileToUpload">
+                <div class="profile-pic" style="background-image: url('assets/images/user/avatar-4.jpg')">
+                    <span class="feather icon-camera"></span>
+                    <span>Change Image</span>
+                </div>
+            </label>
+            <input type="File" name="fileToUpload" id="fileToUpload" />
+        </form> -->
+        <form enctype="multipart/form-data" class="d-flex justify-content-center">
+            <label for="fileToUpload">
+                <div class="profile-pic" [style.background-image]="'url(' + previewImage + ')'">
+                    <span class="feather icon-camera"></span>
+                    <span>Change Image</span>
+                </div>
+            </label>
+
+            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" (change)="onFileSelected($event)"
+                hidden />
+        </form>
+
+    </app-card>
+    <app-card cardTitle="User info" [options]="false" blockClass="table-border-style" class="col-md-8">
+        <form class="needs-validation" novalidate (ngSubmit)="saveChanges()">
+
+            <!-- <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip01" class="form-label fw-bold">Full name</label>
                     <input type="text" class="form-control" id="validationTooltip01" placeholder="Full Name" required />
@@ -42,23 +66,53 @@
                         <option selected>Grade 3</option>
                         <option>Grade 4</option>
                     </select>
-                    <!-- <div class="invalid-tooltip">Please provide a valid state.</div>
-                    <div class="valid-tooltip">Looks good!</div> -->
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="endDate" class="form-label fw-bold">End Date</label>
-                    <input formControlName="endDate" id="endDate" type="date" class="form-control" />
+                    <label for="endDate" class="form-label fw-bold">Birth date</label>
+                    <input formControlName="birthDate" id="endDate" type="date" class="form-control" />
+                </div>
+            </div> -->
 
-                    <!-- <div *ngIf="submitted && f['endDate'].errors" class="invalid-feedback">
-                        <div *ngIf="f['endDate'].errors['required']">
-                            Please enter the end date.
-                        </div>
-                    </div> -->
+            <div class="row">
+                <div class="form-group">
+                    <label class="form-label fw-bold">Full name</label>
+                    <input type="text" class="form-control" [(ngModel)]="form.fullName" name="fullName"
+                        placeholder="Full Name" required />
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+
+                    <label class="form-label fw-bold">Mobile number</label>
+                    <input type="text" [(ngModel)]="form.mobile" name="mobile" class="form-control"
+                        placeholder="Mobile number" required />
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+
+                    <label class="form-label fw-bold">Grade</label>
+                    <select [(ngModel)]="form.grade" name="grade" class="form-control">
+                        <option>Grade 3</option>
+                        <option>Grade 4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="endDate" class="form-label fw-bold">Birth date</label>
+                    <input [(ngModel)]="form.birthDate" name="birthDate" type="date"
+                        class="form-control" />
                 </div>
             </div>
 
             <div class="d-flex">
-                <button class="btn btn-success" type="submit">Save</button>
+                <button class="btn btn-primary" type="submit">Save changes</button>
             </div>
         </form>
     </app-card>
