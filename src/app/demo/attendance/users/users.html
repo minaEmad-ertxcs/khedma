@@ -1,14 +1,16 @@
-<div class="modal" [class.show]="isModalOpen">
-    <div class="modal-content">
-        <h3>Confirm Delete</h3>
-        <p>Are you sure you want to delete {{ selectedUser?.fullName }} with id {{ selectedUser?.id }}</p>
-        <div class="modal-actions">
-            <button class="btn btn-danger" (click)="confirmDelete()">Yes</button>
-            <button class="btn btn-secondary" (click)="closeModal()">No</button>
+<div class="row">
+
+    <div class="modal" [class.show]="isModalOpen">
+        <div class="modal-content">
+            <h3>Confirm Delete</h3>
+            <p>Are you sure you want to delete {{ selectedUser?.fullName }} with id {{ selectedUser?.id }}</p>
+            <div class="modal-actions">
+                <button class="btn btn-danger" (click)="confirmDelete()">Yes</button>
+                <button class="btn btn-secondary" (click)="closeModal()">No</button>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 
@@ -56,10 +58,10 @@
                                     alt="User-Profile-Image" />
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-light-info me-2" (click)="onUpdate(user)">
+                                <button class="btn btn-sm btn-light-info m-1" (click)="onUpdate(user)">
                                     <i class="feather icon-edit"></i>
                                 </button>
-                                <button class="btn btn-sm btn-light-danger me-2" (click)="onDelete(user)">
+                                <button class="btn btn-sm btn-light-danger m-1" (click)="onDelete(user)">
                                     <i class="feather icon-trash-2"></i>
                                 </button>
                             </td>

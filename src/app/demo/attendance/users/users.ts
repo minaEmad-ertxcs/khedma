@@ -16,7 +16,7 @@ import { UserService } from 'src/app/services/user-service';
 export class Users {
   // configs
   currentPage: number = 1;
-  pageLimit: number = 3;
+  pageLimit: number = 5;
   isModalOpen = false;
   selectedUser: any;
 
