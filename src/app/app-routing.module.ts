@@ -6,6 +6,7 @@ import { GuestComponent } from './theme/layout/guest/guest.component';
 import { provideHttpClient } from '@angular/common/http';
 import { authGuard } from './auth-guard';
 import { guestGuard } from './guest-guard';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -76,6 +77,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
-  providers: [provideHttpClient()]
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
 })
 export class AppRoutingModule { }
