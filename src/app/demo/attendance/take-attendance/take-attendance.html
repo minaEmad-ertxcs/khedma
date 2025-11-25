@@ -1,5 +1,11 @@
+<div class="alert-popup" *ngIf="utilityService.alertMessage">
+    <div class="alert-box" [ngClass]="utilityService.alertType">
+        {{ utilityService.alertMessage }}
+    </div>
+</div>
+
 <div class="row">
-    <div class="col-xl-12"> <!-- option 1 -->
+    <div class="col-xl-12">
         <app-card cardTitle="Take attendance" [options]="false" blockClass="table-border-style">
             <div class="d-flex align-items-center gap-3 mb-3">
 
@@ -80,7 +86,7 @@
                                 <td>
                                     <div class="checkbox-wrapper-19 d-flex justify-content-center">
                                         <input type="checkbox" id="{{ user.id }}-{{ record.date }}"
-                                            [(ngModel)]="record.isPresent" />
+                                            [(ngModel)]="record.isPresent" (change)="onRecordChange(user.id, record)" />
                                         <label for="{{ user.id }}-{{ record.date }}" class="check-box"></label>
                                     </div>
                                 </td>
@@ -135,6 +141,12 @@
                     </nav>
                 </div>
                 }
+            </div>
+
+
+            <div class="mt-3">
+                <button class="btn btn-success" [disabled]="changes.length === 0"
+                    (click)="submitAttendance()">Save</button>
             </div>
 
             <ng-template #noUsers>

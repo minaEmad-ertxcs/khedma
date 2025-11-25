@@ -1,9 +1,10 @@
-import { Component, viewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UtilityService } from 'src/app/services/utility-service';
 
 @Component({
   selector: 'app-take-attendance',
@@ -21,6 +22,7 @@ export class TakeAttendance {
   pages: any;
   searchTerm = '';
   totalElements: number = 0;
+  changes: any[] = [];
 
   startDate: string = '';
   endDate: string = '';
@@ -28,7 +30,7 @@ export class TakeAttendance {
   submitted = false;
   users: any[] = [];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, public utilityService: UtilityService) { }
 
   ngOnInit() {
     this.searchForm = this.fb.group({
@@ -306,6 +308,8 @@ export class TakeAttendance {
   }
 
   prevPage() {
+    this.utilityService.showAlert('Something went wrong!', 'danger');
+
     if (this.currentPage > 1) {
       this.currentPage--;
     }
@@ -317,6 +321,7 @@ export class TakeAttendance {
   }
 
   nextPage() {
+    this.utilityService.showAlert('Something went wrong!', 'success');
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
@@ -623,5 +628,36 @@ export class TakeAttendance {
     this.totalElements = this.users.length;
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
 
+  }
+
+  onRecordChange(userId: number, record: any) {
+    const existing = this.changes.find(item => item.userId === userId && item.date === record.date);
+
+    if (existing) {
+      existing.isPresent = record.isPresent;
+
+      console.log("Updated record: " + JSON.stringify(this.changes));
+    } else {
+      this.changes.push({
+        userId: userId,
+        date: record.date,
+        isPresent: record.isPresent
+      });
+
+      console.log("New record: " + JSON.stringify(this.changes));
+    }
+  }
+
+  submitAttendance() {
+    const body = {
+      attendanceRecords: this.changes
+    };
+
+    console.log("Final records to submit: " + JSON.stringify(body));
+
+    // this.http.post('/api/attendance', body).subscribe({
+    //   next: res => console.log('Saved!', res),
+    //   error: err => console.error(err)
+    // });
   }
 }
