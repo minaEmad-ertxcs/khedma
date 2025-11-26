@@ -1,3 +1,9 @@
+<div class="alert-popup" *ngIf="utilityService.alertMessage">
+    <div class="alert-box" [ngClass]="utilityService.alertType">
+        {{ utilityService.alertMessage }}
+    </div>
+</div>
+
 <div class="row">
 
     <div class="modal" [class.show]="isModalOpen">
@@ -32,9 +38,21 @@
     </div>
     } -->
 
+
+
+    @if (isLoading) {
+    <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="text-muted text-center">
+            <span class="loader"></span>
+        </div>
+    </div>
+    }
+
+    @if (!isLoading) {
     <div class="col-xl-12"> <!-- option 2 -->
         <app-card cardTitle="Al Makhdomen" [options]="false" blockClass="table-border-style">
             <div class="table-responsive">
+
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -42,6 +60,7 @@
                             <th>Full name</th>
                             <th>Mobile phone</th>
                             <th>Birth date</th>
+                            <th>Role</th>
                             <th>Image</th>
                             <th>Action</th>
                         </tr>
@@ -50,9 +69,10 @@
                         @for (user of pagedUsers; track user) {
                         <tr>
                             <th scope="row">{{ user.id }}</th>
-                            <td>{{ user.fullName }}</td>
-                            <td>{{ user.mobilePhone }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.mobileNumber }}</td>
                             <td>{{ user.birthDate }}</td>
+                            <td>{{ user.role }}</td>
                             <td>
                                 <img src="assets/images/user/avatar-4.jpg" class="img-radius wid-40"
                                     alt="User-Profile-Image" />
@@ -69,7 +89,7 @@
                         }
                         @empty {
                         <tr>
-                            <td colspan="5" class="text-center text-muted">
+                            <td colspan="7" class="text-center text-muted">
                                 No users found.
                             </td>
                         </tr>
@@ -99,6 +119,7 @@
             </div>
         </app-card>
     </div>
+    }
 
     <!-- <div class="col-xl-12">
         <app-card cardTitle="Al Makhdomen" [options]="false" blockClass="table-border-style">

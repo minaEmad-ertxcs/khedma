@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api-service';
 
 
 @Component({
@@ -17,9 +17,7 @@ export class SignInComponent {
   loginForm!: FormGroup;
   submitted = false;
 
-  private apiUrl = 'https://temp-backend-url.com/api/login';
-
-  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder) { }
+  constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -40,18 +38,22 @@ export class SignInComponent {
     }
 
     console.log('Form submitted:', this.loginForm.value);
-    localStorage.setItem('token', "test token");
-    this.router.navigate(['/analytics']);
 
-    // this.http.post(this.apiUrl, body).subscribe({
-    //   next: (response) => {
-    //     console.log('Login successful:', response);
-    //     this.router.navigate(['/dashboard']);
-    //   },
-    //   error: (error) => {
-    //     console.error('Login failed:', error);
-    //     alert('Invalid credentials');
-    //   }
-    // });
+    const body = {
+      username: this.loginForm.get('username')?.value,
+      password: this.loginForm.get('password')?.value
+    }
+
+    this.apiService.login(body).subscribe({
+      next: (response: any) => {
+        console.log('Login successful:', response);
+
+        localStorage.setItem('token', response.access_token);
+        this.router.navigate(['/analytics']);
+      },
+      error: (error) => {
+        console.error('Login failed:', error);
+      }
+    });
   }
 }

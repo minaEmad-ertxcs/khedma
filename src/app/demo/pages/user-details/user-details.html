@@ -8,7 +8,7 @@
     }
 
     @if (!isLoading) {
-    <div class="col-sm-6">
+    <div class="col-md-4">
         <app-card cardTitle="Profile picture" [options]="false" blockClass="table-border-style" class="col-md-4">
             <form enctype="multipart/form-data" class="d-flex justify-content-center">
                 <label for="fileToUpload">
@@ -25,7 +25,7 @@
         </app-card>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-md-8">
         <app-card cardTitle="User info" [options]="false" blockClass="table-border-style" class="col-md-8">
             <form [formGroup]="form" class="needs-validation" novalidate (ngSubmit)="saveChanges()">
 
@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="d-flex">
-                    <button class="btn btn-primary" type="submit">Save changes</button>
+                    <button class="btn btn-success" type="submit">Save</button>
                 </div>
             </form>
         </app-card>

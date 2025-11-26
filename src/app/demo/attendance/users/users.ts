@@ -6,6 +6,9 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user-service';
+import { HttpClient } from '@angular/common/http';
+import { ApiService } from 'src/app/services/api-service';
+import { UtilityService } from 'src/app/services/utility-service';
 
 @Component({
   selector: 'app-users',
@@ -19,92 +22,42 @@ export class Users {
   pageLimit: number = 5;
   isModalOpen = false;
   selectedUser: any;
-
+  isLoading = false;
 
   // vars
   pages: any;
   searchTerm = '';
   totalElements: number = 0;
+  users: any[] = [];
 
-  constructor(private router: Router, private userService: UserService) {
-    this.totalElements = this.users.length;
-    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-
-    console.log("totalPages: " + this.totalPages);
+  constructor(public utilityService: UtilityService, private apiService: ApiService, private http: HttpClient, private router: Router, private userService: UserService) {
   }
 
-  users = [
-    {
-      id: '1',
-      fullName: 'minaemad',
-      mobilePhone: '01125037505',
-      birthDate: '01-05-2011',
-      isAttended: false
-    },
-    {
-      id: '2',
-      fullName: 'minaemad1',
-      mobilePhone: '01325037505',
-      birthDate: '23-5-2001',
-      isAttended: true
-    },
-    {
-      id: '3',
-      fullName: 'minaemad2',
-      mobilePhone: '01125037505',
-      birthDate: '23-5-2001',
-      isAttended: false
-    },
-    {
-      id: '4',
-      fullName: 'minaemad3',
-      mobilePhone: '01125037405',
-      birthDate: '23-6-2001',
-      isAttended: true
-    },
-    {
-      id: '5',
-      fullName: 'minaemad4',
-      mobilePhone: '01125037505',
-      birthDate: '20-5-2001',
-      isAttended: true
-    },
-    {
-      id: '6',
-      fullName: 'minaemad4',
-      mobilePhone: '01125037505',
-      birthDate: '20-5-2001',
-      isAttended: false
-    },
-    {
-      id: '7',
-      fullName: 'minaemad4',
-      mobilePhone: '01125037505',
-      birthDate: '20-5-2001',
-      isAttended: true
-    },
-    {
-      id: '8',
-      fullName: 'minaemad4',
-      mobilePhone: '01125037505',
-      birthDate: '20-5-2001',
-      isAttended: false
-    },
-    {
-      id: '9',
-      fullName: 'minaemad4',
-      mobilePhone: '01125037505',
-      birthDate: '20-5-2001',
-      isAttended: false
-    },
-    {
-      id: '10',
-      fullName: 'minaemad4',
-      mobilePhone: '01125037505',
-      birthDate: '20-5-2001',
-      isAttended: true
-    },
-  ]
+  ngOnInit() {
+    this.isLoading = true;
+    this.getUsers();
+  }
+
+  getUsers() {
+    const args = {
+      page: 0,
+      size: 5
+    }
+
+    this.apiService.getUsers(args).subscribe({
+      next: (response: any) => {
+        console.log('Get Users successful:', response);
+
+        this.users = response.content;
+      },
+      error: (error) => {
+        console.error('Login failed:', error);
+
+      }
+    });
+
+    this.isLoading = false;
+  }
 
   cards = [
     {
