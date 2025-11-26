@@ -10,7 +10,7 @@ export class UtilityService {
 
   constructor() { }
 
-  showAlert(message: string, type: 'success' | 'danger') {
+  showAlert(message: string, type: 'success' | 'error') {
     this.alertMessage = message;
     this.alertType = type === 'success' ? 'alert-success' : 'alert-danger';
 

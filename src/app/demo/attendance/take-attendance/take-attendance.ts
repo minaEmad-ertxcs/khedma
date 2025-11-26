@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/services/utility-service';
+import { ApiService } from 'src/app/services/api-service';
 
 @Component({
   selector: 'app-take-attendance',
@@ -30,7 +31,7 @@ export class TakeAttendance {
   submitted = false;
   users: any[] = [];
 
-  constructor(private fb: FormBuilder, public utilityService: UtilityService) { }
+  constructor(private fb: FormBuilder, public utilityService: UtilityService, private apiService: ApiService) { }
 
   ngOnInit() {
     this.searchForm = this.fb.group({
@@ -39,249 +40,39 @@ export class TakeAttendance {
     });
   }
 
+  getAttendanceByRanges() {
+    this.submitted = true;
 
-  // users = [
-  //   {
-  //     id: '1',
-  //     fullName: 'minaemad',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '01-05-2011',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: false
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '2',
-  //     fullName: 'minaemad1',
-  //     mobilePhone: '01325037505',
-  //     birthDate: '23-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: false
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '3',
-  //     fullName: 'minaemad2',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '23-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: false
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '4',
-  //     fullName: 'minaemad3',
-  //     mobilePhone: '01125037405',
-  //     birthDate: '23-6-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: true
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '5',
-  //     fullName: 'minaemad4',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '20-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: false
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '6',
-  //     fullName: 'minaemad4',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '20-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: true
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '7',
-  //     fullName: 'minaemad4',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '20-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: false
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '8',
-  //     fullName: 'minaemad4',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '20-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: true
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '9',
-  //     fullName: 'minaemad4',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '20-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: true
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: '10',
-  //     fullName: 'minaemad4',
-  //     mobilePhone: '01125037505',
-  //     birthDate: '20-5-2001',
-  //     records: [
-  //       {
-  //         date: "7-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "14-11-2025",
-  //         isPresent: false
-  //       },
-  //       {
-  //         date: "21-11-2025",
-  //         isPresent: true
-  //       },
-  //       {
-  //         date: "28-11-2025",
-  //         isPresent: false
-  //       }
-  //     ]
-  //   },
-  // ]
+    if (this.searchForm.invalid) {
+      return;
+    }
+
+    const args = {
+      page: 0,
+      size: 5
+    }
+
+    const body = {
+      startDate: this.searchForm.get('startDate')?.value,
+      endDate: this.searchForm.get('endDate')?.value
+    }
+
+    console.log(body)
+
+    this.apiService.getAttendanceByRange(body, args).subscribe({
+      next: (response: any) => {
+        console.log('Get attendance successfully:', response);
+
+        this.users = response.content;
+      },
+      error: (error) => {
+        console.log('Somthing went wrong:', error);
+      }
+    });
+
+    this.totalElements = this.users.length;
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
 
   get f() {
     return this.searchForm.controls;
@@ -308,8 +99,6 @@ export class TakeAttendance {
   }
 
   prevPage() {
-    this.utilityService.showAlert('Something went wrong!', 'danger');
-
     if (this.currentPage > 1) {
       this.currentPage--;
     }
@@ -321,330 +110,22 @@ export class TakeAttendance {
   }
 
   nextPage() {
-    this.utilityService.showAlert('Something went wrong!', 'success');
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
-  }
-
-  getUsers() {
-    this.submitted = true;
-
-    if (this.searchForm.invalid) {
-      return;
-    }
-
-    this.users = [
-      {
-        id: '1',
-        fullName: 'minaemad',
-        mobilePhone: '01125037505',
-        birthDate: '01-05-2011',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: true
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          }
-        ]
-      },
-      {
-        id: '2',
-        fullName: 'minaemad1',
-        mobilePhone: '01325037505',
-        birthDate: '23-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: false
-          },
-          {
-            date: "14-11-2025",
-            isPresent: true
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          }
-        ]
-      },
-      {
-        id: '3',
-        fullName: 'minaemad2',
-        mobilePhone: '01125037505',
-        birthDate: '23-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: false
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          }
-        ]
-      },
-      {
-        id: '4',
-        fullName: 'minaemad3',
-        mobilePhone: '01125037405',
-        birthDate: '23-6-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: true
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: true
-          }
-        ]
-      },
-      {
-        id: '5',
-        fullName: 'minaemad4',
-        mobilePhone: '01125037505',
-        birthDate: '20-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: false
-          },
-          {
-            date: "14-11-2025",
-            isPresent: false
-          },
-          {
-            date: "21-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          }
-        ]
-      },
-      {
-        id: '6',
-        fullName: 'minaemad4',
-        mobilePhone: '01125037505',
-        birthDate: '20-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: true
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: true
-          }
-        ]
-      },
-      {
-        id: '7',
-        fullName: 'minaemad4',
-        mobilePhone: '01125037505',
-        birthDate: '20-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: false
-          },
-          {
-            date: "14-11-2025",
-            isPresent: true
-          },
-          {
-            date: "21-11-2025",
-            isPresent: false
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          }
-        ]
-      },
-      {
-        id: '8',
-        fullName: 'minaemad4',
-        mobilePhone: '01125037505',
-        birthDate: '20-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: true
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: true
-          }
-        ]
-      },
-      {
-        id: '9',
-        fullName: 'minaemad4',
-        mobilePhone: '01125037505',
-        birthDate: '20-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: false
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: true
-          }
-        ]
-      },
-      {
-        id: '10',
-        fullName: 'minaemad4',
-        mobilePhone: '01125037505',
-        birthDate: '20-5-2001',
-        records: [
-          {
-            date: "7-11-2025",
-            isPresent: true
-          },
-          {
-            date: "14-11-2025",
-            isPresent: false
-          },
-          {
-            date: "21-11-2025",
-            isPresent: true
-          },
-          {
-            date: "28-11-2025",
-            isPresent: false
-          }
-        ]
-      },
-    ]
-
-    this.totalElements = this.users.length;
-    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-
   }
 
   onRecordChange(userId: number, record: any) {
     const existing = this.changes.find(item => item.userId === userId && item.date === record.date);
 
     if (existing) {
-      existing.isPresent = record.isPresent;
-
-      console.log("Updated record: " + JSON.stringify(this.changes));
+      existing.present = record.isPresent;
     } else {
       this.changes.push({
         userId: userId,
         date: record.date,
-        isPresent: record.isPresent
+        present: record.isPresent
       });
-
-      console.log("New record: " + JSON.stringify(this.changes));
     }
   }
 
@@ -655,9 +136,18 @@ export class TakeAttendance {
 
     console.log("Final records to submit: " + JSON.stringify(body));
 
-    // this.http.post('/api/attendance', body).subscribe({
-    //   next: res => console.log('Saved!', res),
-    //   error: err => console.error(err)
-    // });
+    this.apiService.takeAttendance(this.changes).subscribe({
+      next: (response: any) => {
+        console.log('Save attendance successfully:', response);
+
+        this.utilityService.showAlert(response.message, 'success');
+
+        this.changes = [];
+      },
+      error: (error) => {
+        console.log('Login failed:', error);
+        this.utilityService.showAlert('Something went wrong: ' + JSON.stringify(error), 'error');
+      }
+    });
   }
 }

@@ -9,7 +9,7 @@
         <app-card cardTitle="Take attendance" [options]="false" blockClass="table-border-style">
             <div class="d-flex align-items-center gap-3 mb-3">
 
-                <form [formGroup]="searchForm" (ngSubmit)="getUsers()" novalidate>
+                <form [formGroup]="searchForm" (ngSubmit)="getAttendanceByRanges()" novalidate>
                     <div class="d-flex gap-3 mb-3">
 
                         <div class="flex-grow-1">
@@ -66,10 +66,10 @@
                                 <th>ID</th>
                                 <th>Full name</th>
 
-                                @for (record of pagedUsers[0].records; track record) {
+                                @for (attendance of pagedUsers[0].attendances; track attendance) {
                                 <th>
                                     <div class="d-flex justify-content-center">
-                                        {{ record.date }}
+                                        {{ attendance.date }}
                                     </div>
                                 </th>
                                 }
@@ -80,14 +80,14 @@
                             @for (user of pagedUsers; track user) {
                             <tr>
                                 <th scope="row">{{ user.id }}</th>
-                                <td>{{ user.fullName }}</td>
+                                <td>{{ user.username }}</td>
 
-                                @for (record of user.records; track record) {
+                                @for (attendance of user.attendances; track attendance) {
                                 <td>
                                     <div class="checkbox-wrapper-19 d-flex justify-content-center">
-                                        <input type="checkbox" id="{{ user.id }}-{{ record.date }}"
-                                            [(ngModel)]="record.isPresent" (change)="onRecordChange(user.id, record)" />
-                                        <label for="{{ user.id }}-{{ record.date }}" class="check-box"></label>
+                                        <input type="checkbox" id="{{ user.id }}-{{ attendance.date }}"
+                                            [(ngModel)]="attendance.isPresent" (change)="onRecordChange(user.id, attendance)" />
+                                        <label for="{{ user.id }}-{{ attendance.date }}" class="check-box"></label>
                                     </div>
                                 </td>
                                 }

@@ -21,23 +21,31 @@ export class ApiService {
   getUsers(args: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/user"
 
-    const token = localStorage.getItem('token');
-
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json'
     });
     return this.http.get(fullUrl, { headers, params: args });
   }
 
-  takeAttendance() {
+  getAttendanceByRange(body: any, args: any) {
+    const fullUrl = this.baseUrl + this.apiV1 + "/attendance/by-range"
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post(fullUrl, body, { headers, params: args });
+  }
+
+  takeAttendance(body: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/attendance/take-records"
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json'
     });
-    return this.http.get(fullUrl, { headers });
+    return this.http.post(fullUrl, body, { headers });
   }
 
   private getToken() {
