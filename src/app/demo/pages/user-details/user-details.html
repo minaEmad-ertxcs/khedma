@@ -50,15 +50,15 @@
                 <div class="row">
                     <div class="form-group">
                         <label class="form-label fw-bold">Mobile number</label>
-                        <input type="text" name="mobile" class="form-control" placeholder="Mobile number"
-                            formControlName="mobile" [(ngModel)]="user.mobile"
-                            [ngClass]="{'is-invalid': submitted && f['mobile'].invalid}" />
+                        <input type="text" name="mobileNumber" class="form-control" placeholder="Mobile number"
+                            formControlName="mobileNumber" [(ngModel)]="user.mobileNumber"
+                            [ngClass]="{'is-invalid': submitted && f['mobileNumber'].invalid}" />
 
-                        <div *ngIf="submitted && f['mobile'].errors" class="invalid-feedback">
-                            <div *ngIf="f['mobile'].errors['required']">
+                        <div *ngIf="submitted && f['mobileNumber'].errors" class="invalid-feedback">
+                            <div *ngIf="f['mobileNumber'].errors['required']">
                                 Please enter the Mobile number.
                             </div>
-                            <div *ngIf="f['mobile'].errors['minlength']">
+                            <div *ngIf="f['mobileNumber'].errors['minlength']">
                                 Mobile number must be at least 11 characters.
                             </div>
                         </div>

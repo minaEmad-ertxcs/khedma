@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ApiService } from 'src/app/services/api-service';
 import { UserService } from 'src/app/services/user-service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
@@ -20,7 +21,7 @@ export class UserDetails implements OnInit {
   submitted = false;
   isLoading = false;
 
-  constructor(private router: Router, private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private router: Router, private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder, private apiService: ApiService) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -29,21 +30,21 @@ export class UserDetails implements OnInit {
 
     this.form = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
-      mobile: ['', [Validators.required, Validators.minLength(11)]],
+      mobileNumber: ['', [Validators.required, Validators.minLength(11)]],
       grade: ['', [Validators.required]],
       birthDate: ['', [Validators.required]],
       profileImage: [null]
     });
 
-    // get the data from database
+    this.apiService.getUserById(this.userId)
+      .subscribe({
+        next: res => {
+          console.log("Get user successfully", res);
 
-    this.user = {
-      fullName: "mina emad",
-      mobile: "01125037505",
-      grade: "Grade 4",
-      birthDate: "2018-04-15",
-      profileImage: null
-    }
+          this.user = res;
+        },
+        error: err => console.error("Error", err)
+      });
   }
 
   get f() {
@@ -74,10 +75,13 @@ export class UserDetails implements OnInit {
       return;
     }
 
+    console.log("Body: " + JSON.stringify(this.form.value));
+
     const formData = new FormData();
 
     formData.append('fullName', this.form.value.fullName);
-    formData.append('mobile', this.form.value.mobile);
+    formData.append('username', this.user.username);
+    formData.append('mobileNumber', this.form.value.mobileNumber);
     formData.append('grade', this.form.value.grade);
     formData.append('birthDate', this.form.value.birthDate);
 
@@ -85,10 +89,17 @@ export class UserDetails implements OnInit {
       formData.append('profileImage', this.selectedFile);
     }
 
-    // this.http.post('https://your-api-url.com/api/update-user', formData)
-    //   .subscribe({
-    //     next: res => console.log("Saved successfully", res),
-    //     error: err => console.error("Error", err)
-    //   });
+    console.log("FormData Values:");
+    for (const [key, value] of formData as any) {
+      console.log(key, value);
+    }
+
+    this.apiService.updateUser(formData)
+      .subscribe({
+        next: res => {
+          console.log("Saved successfully", res);
+        },
+        error: err => console.error("Errors❤️", err)
+      });
   }
 }

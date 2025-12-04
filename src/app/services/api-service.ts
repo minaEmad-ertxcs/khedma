@@ -21,31 +21,51 @@ export class ApiService {
   getUsers(args: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/user"
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.getToken()}`,
-      'Content-Type': 'application/json'
-    });
+    const headers = this.getHeaders();
+
     return this.http.get(fullUrl, { headers, params: args });
+  }
+
+  getUserById(id: any) {
+    const fullUrl = this.baseUrl + this.apiV1 + "/user/" + id
+
+    const headers = this.getHeaders();
+
+    return this.http.get(fullUrl, { headers });
   }
 
   getAttendanceByRange(body: any, args: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/attendance/by-range"
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.getToken()}`,
-      'Content-Type': 'application/json'
-    });
+    const headers = this.getHeaders();
+
     return this.http.post(fullUrl, body, { headers, params: args });
   }
 
   takeAttendance(body: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/attendance/take-records"
 
+    const headers = this.getHeaders();
+
+    return this.http.post(fullUrl, body, { headers });
+  }
+
+  updateUser(body: any) {
+    const fullUrl = this.baseUrl + this.apiV1 + "/user"
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json'
     });
-    return this.http.post(fullUrl, body, { headers });
+
+    return this.http.put(fullUrl, body, { headers });
+  }
+
+  private getHeaders() {
+    return new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json'
+    });
   }
 
   private getToken() {
