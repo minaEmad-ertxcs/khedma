@@ -4,6 +4,8 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api-service';
+import { UtilityService } from 'src/app/services/utility-service';
+import { BaseResponse } from 'src/app/model/BaseResponse';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class SignInComponent {
   loginForm!: FormGroup;
   submitted = false;
 
-  constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) { }
+  constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder, public utilityService: UtilityService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -37,7 +39,7 @@ export class SignInComponent {
       return;
     }
 
-    console.log('Form submitted:', this.loginForm.value);
+    this.utilityService.print('Form submitted:', this.loginForm.value);
 
     const body = {
       username: this.loginForm.get('username')?.value,
@@ -45,14 +47,15 @@ export class SignInComponent {
     }
 
     this.apiService.login(body).subscribe({
-      next: (response: any) => {
-        console.log('Login successful:', response);
+      next: (response: BaseResponse) => {
+        this.utilityService.print('Login successful:', response);
 
-        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('token', response.data.access_token);
         this.router.navigate(['/analytics']);
       },
       error: (error) => {
-        console.error('Login failed:', error);
+        this.utilityService.print('Login failed:', error.error);
+        this.utilityService.showAlert(error.error.message, 'error');
       }
     });
   }

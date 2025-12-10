@@ -58,58 +58,58 @@ export const NavigationItems: NavigationItem[] = [
       },
     ]
   },
-  {
-    id: 'ui-component',
-    title: 'Ui Component',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
-        id: 'basic',
-        title: 'Component',
-        type: 'collapse',
-        icon: 'feather icon-box',
-        children: [
-          {
-            id: 'button',
-            title: 'Button',
-            type: 'item',
-            url: '/component/button'
-          },
-          {
-            id: 'badges',
-            title: 'Badges',
-            type: 'item',
-            url: '/component/badges'
-          },
-          {
-            id: 'breadcrumb-pagination',
-            title: 'Breadcrumb & Pagination',
-            type: 'item',
-            url: '/component/breadcrumb-paging'
-          },
-          {
-            id: 'collapse',
-            title: 'Collapse',
-            type: 'item',
-            url: '/component/collapse'
-          },
-          {
-            id: 'tabs-pills',
-            title: 'Tabs & Pills',
-            type: 'item',
-            url: '/component/tabs-pills'
-          },
-          {
-            id: 'typography',
-            title: 'Typography',
-            type: 'item',
-            url: '/component/typography'
-          }
-        ]
-      }
-    ]
-  },
+  // {
+  //   id: 'ui-component',
+  //   title: 'Ui Component',
+  //   type: 'group',
+  //   icon: 'icon-group',
+  //   children: [
+  //     {
+  //       id: 'basic',
+  //       title: 'Component',
+  //       type: 'collapse',
+  //       icon: 'feather icon-box',
+  //       children: [
+  //         {
+  //           id: 'button',
+  //           title: 'Button',
+  //           type: 'item',
+  //           url: '/component/button'
+  //         },
+  //         {
+  //           id: 'badges',
+  //           title: 'Badges',
+  //           type: 'item',
+  //           url: '/component/badges'
+  //         },
+  //         {
+  //           id: 'breadcrumb-pagination',
+  //           title: 'Breadcrumb & Pagination',
+  //           type: 'item',
+  //           url: '/component/breadcrumb-paging'
+  //         },
+  //         {
+  //           id: 'collapse',
+  //           title: 'Collapse',
+  //           type: 'item',
+  //           url: '/component/collapse'
+  //         },
+  //         {
+  //           id: 'tabs-pills',
+  //           title: 'Tabs & Pills',
+  //           type: 'item',
+  //           url: '/component/tabs-pills'
+  //         },
+  //         {
+  //           id: 'typography',
+  //           title: 'Typography',
+  //           type: 'item',
+  //           url: '/component/typography'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   // {
   //   id: 'Authentication',
   //   title: 'Authentication',
@@ -136,46 +136,46 @@ export const NavigationItems: NavigationItem[] = [
   //     }
   //   ]
   // },
-  {
-    id: 'chart',
-    title: 'Chart',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
-        id: 'apexchart',
-        title: 'ApexChart',
-        type: 'item',
-        url: '/chart',
-        classes: 'nav-item',
-        icon: 'feather icon-pie-chart'
-      }
-    ]
-  },
-  {
-    id: 'forms & tables',
-    title: 'Forms & Tables',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
-        id: 'forms',
-        title: 'Basic Forms',
-        type: 'item',
-        url: '/forms',
-        classes: 'nav-item',
-        icon: 'feather icon-file-text'
-      },
-      {
-        id: 'tables',
-        title: 'Tables',
-        type: 'item',
-        url: '/tables',
-        classes: 'nav-item',
-        icon: 'feather icon-server'
-      }
-    ]
-  },
+  // {
+  //   id: 'chart',
+  //   title: 'Chart',
+  //   type: 'group',
+  //   icon: 'icon-group',
+  //   children: [
+  //     {
+  //       id: 'apexchart',
+  //       title: 'ApexChart',
+  //       type: 'item',
+  //       url: '/chart',
+  //       classes: 'nav-item',
+  //       icon: 'feather icon-pie-chart'
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: 'forms & tables',
+  //   title: 'Forms & Tables',
+  //   type: 'group',
+  //   icon: 'icon-group',
+  //   children: [
+  //     {
+  //       id: 'forms',
+  //       title: 'Basic Forms',
+  //       type: 'item',
+  //       url: '/forms',
+  //       classes: 'nav-item',
+  //       icon: 'feather icon-file-text'
+  //     },
+  //     {
+  //       id: 'tables',
+  //       title: 'Tables',
+  //       type: 'item',
+  //       url: '/tables',
+  //       classes: 'nav-item',
+  //       icon: 'feather icon-server'
+  //     }
+  //   ]
+  // },
   // {
   //   id: 'other',
   //   title: 'Other',

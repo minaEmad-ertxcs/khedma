@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,13 @@ export class UtilityService {
   alertTimeout: any;
 
   constructor() { }
+
+  print(staticMassage?: String, message?: any) {
+    if (environment.production != true) {
+      console.log(staticMassage);
+      console.log(JSON.stringify(message));
+    }
+  }
 
   showAlert(message: string, type: 'success' | 'error') {
     this.alertMessage = message;

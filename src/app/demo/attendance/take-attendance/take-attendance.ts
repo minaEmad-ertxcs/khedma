@@ -57,16 +57,16 @@ export class TakeAttendance {
       endDate: this.searchForm.get('endDate')?.value
     }
 
-    console.log(body)
+    this.utilityService.print("", body)
 
     this.apiService.getAttendanceByRange(body, args).subscribe({
       next: (response: any) => {
-        console.log('Get attendance successfully:', response);
+        this.utilityService.print('Get attendance successfully:', response);
 
-        this.users = response.content;
+        this.users = response.data.content;
       },
       error: (error) => {
-        console.log('Somthing went wrong:', error);
+        this.utilityService.print('Somthing went wrong:', error);
       }
     });
 
@@ -87,7 +87,7 @@ export class TakeAttendance {
     if (!this.searchTerm.trim())
       return this.users;
 
-    console.log("Search for " + this.searchTerm);
+    this.utilityService.print("Search for ", this.searchTerm);
 
     return this.users.filter(user =>
       user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -106,7 +106,7 @@ export class TakeAttendance {
 
   goToPage(page: number) {
     this.currentPage = page;
-    console.log("Go to page: " + this.currentPage);
+    this.utilityService.print("Go to page: " + this.currentPage);
   }
 
   nextPage() {
@@ -134,18 +134,18 @@ export class TakeAttendance {
       attendanceRecords: this.changes
     };
 
-    console.log("Final records to submit: " + JSON.stringify(body));
+    this.utilityService.print("Final records to submit: ", body);
 
     this.apiService.takeAttendance(this.changes).subscribe({
       next: (response: any) => {
-        console.log('Save attendance successfully:', response);
+        this.utilityService.print('Save attendance successfully:', response);
 
         this.utilityService.showAlert(response.message, 'success');
 
         this.changes = [];
       },
       error: (error) => {
-        console.log('Login failed:', error);
+        this.utilityService.print('Login failed:', error);
         this.utilityService.showAlert('Something went wrong: ' + JSON.stringify(error), 'error');
       }
     });

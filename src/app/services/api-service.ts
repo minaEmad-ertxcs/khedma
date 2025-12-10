@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { BaseResponse } from '../model/BaseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ApiService {
 
   login(body: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/auth/login"
-    return this.http.post(fullUrl, body);
+    return this.http.post<BaseResponse>(fullUrl, body);
   }
 
   getUsers(args: any) {
@@ -23,7 +24,7 @@ export class ApiService {
 
     const headers = this.getHeaders();
 
-    return this.http.get(fullUrl, { headers, params: args });
+    return this.http.get<BaseResponse>(fullUrl, { headers, params: args });
   }
 
   getUserById(id: any) {
@@ -31,7 +32,7 @@ export class ApiService {
 
     const headers = this.getHeaders();
 
-    return this.http.get(fullUrl, { headers });
+    return this.http.get<BaseResponse>(fullUrl, { headers });
   }
 
   getAttendanceByRange(body: any, args: any) {
@@ -39,7 +40,7 @@ export class ApiService {
 
     const headers = this.getHeaders();
 
-    return this.http.post(fullUrl, body, { headers, params: args });
+    return this.http.post<BaseResponse>(fullUrl, body, { headers, params: args });
   }
 
   takeAttendance(body: any) {
@@ -47,18 +48,27 @@ export class ApiService {
 
     const headers = this.getHeaders();
 
-    return this.http.post(fullUrl, body, { headers });
+    return this.http.post<BaseResponse>(fullUrl, body, { headers });
   }
 
   updateUser(body: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/user"
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.getToken()}`,
-      'Content-Type': 'application/json'
+      'Authorization': `Bearer ${this.getToken()}`
     });
 
-    return this.http.put(fullUrl, body, { headers });
+    return this.http.post<BaseResponse>(fullUrl, body, { headers });
+  }
+
+  deleteUser(id: number) {
+    const fullUrl = this.baseUrl + this.apiV1 + "/user/" + id
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.delete<BaseResponse>(fullUrl, { headers });
   }
 
   private getHeaders() {

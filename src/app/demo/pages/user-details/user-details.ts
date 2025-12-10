@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ApiService } from 'src/app/services/api-service';
 import { UserService } from 'src/app/services/user-service';
+import { UtilityService } from 'src/app/services/utility-service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 @Component({
@@ -21,12 +22,13 @@ export class UserDetails implements OnInit {
   submitted = false;
   isLoading = false;
 
-  constructor(private router: Router, private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder, private apiService: ApiService) { }
+  constructor(public utilityService: UtilityService, private route: ActivatedRoute, private fb: FormBuilder, private apiService: ApiService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.userId = this.route.snapshot.paramMap.get('id');
 
-    console.log('Loaded user details for ID:', this.userId);
+    this.utilityService.print('Loaded user details for ID:', this.userId);
 
     this.form = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -39,9 +41,9 @@ export class UserDetails implements OnInit {
     this.apiService.getUserById(this.userId)
       .subscribe({
         next: res => {
-          console.log("Get user successfully", res);
-
-          this.user = res;
+          this.utilityService.print("Get user successfully", res);
+          this.user = res.data;
+          this.isLoading = false;
         },
         error: err => console.error("Error", err)
       });
@@ -75,31 +77,34 @@ export class UserDetails implements OnInit {
       return;
     }
 
-    console.log("Body: " + JSON.stringify(this.form.value));
+    this.utilityService.print("Body: " + JSON.stringify(this.form.value));
+
+    this.utilityService.print("the user", this.user);
 
     const formData = new FormData();
 
-    formData.append('fullName', this.form.value.fullName);
-    formData.append('username', this.user.username);
-    formData.append('mobileNumber', this.form.value.mobileNumber);
-    formData.append('grade', this.form.value.grade);
-    formData.append('birthDate', this.form.value.birthDate);
+    formData.append("user", new Blob([JSON.stringify({
+      username: this.user.username,
+      fullName: this.form.value.fullName,
+      mobileNumber: this.form.value.mobileNumber,
+      grade: this.form.value.grade,
+      birthDate: this.form.value.birthDate
+    })], { type: 'application/json' }));
 
     if (this.selectedFile) {
-      formData.append('profileImage', this.selectedFile);
-    }
-
-    console.log("FormData Values:");
-    for (const [key, value] of formData as any) {
-      console.log(key, value);
+      formData.append('image', this.selectedFile);
     }
 
     this.apiService.updateUser(formData)
       .subscribe({
         next: res => {
-          console.log("Saved successfully", res);
+          this.utilityService.print("Saved successfully", res);
+          this.utilityService.showAlert(res.message, "success");
         },
-        error: err => console.error("Errors❤️", err)
+        error: err => {
+          console.log("Errors", err);
+          this.utilityService.showAlert(err.error.message, "error");
+        }
       });
   }
 }

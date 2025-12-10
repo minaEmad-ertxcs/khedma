@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user-service';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from 'src/app/services/api-service';
 import { UtilityService } from 'src/app/services/utility-service';
+import { BaseResponse } from 'src/app/model/BaseResponse';
 
 @Component({
   selector: 'app-users',
@@ -45,72 +46,18 @@ export class Users {
     }
 
     this.apiService.getUsers(args).subscribe({
-      next: (response: any) => {
-        console.log('Get Users successful:', response);
+      next: (response: BaseResponse) => {
+        this.utilityService.print('Get Users successful:', response);
 
-        this.users = response.content;
+        this.users = response.data.content;
       },
       error: (error) => {
-        console.error('Login failed:', error);
-
+        this.utilityService.print('Error:', JSON.stringify(error));
       }
     });
 
     this.isLoading = false;
   }
-
-  cards = [
-    {
-      background: 'bg-c-blue',
-      title: 'Orders Received',
-      icon: 'icon-shopping-cart',
-      text: 'Completed Orders',
-      number: '486',
-      no: '351'
-    },
-    {
-      background: 'bg-c-green',
-      title: 'Total Sales',
-      icon: 'icon-tag',
-      text: 'This Month',
-      number: '1641',
-      no: '213'
-    },
-    {
-      background: 'bg-c-yellow',
-      title: 'Revenue',
-      icon: 'icon-repeat',
-      text: 'This Month',
-      number: '$42,56',
-      no: '$5,032'
-    },
-    {
-      background: 'bg-c-red',
-      title: 'Total Profit',
-      icon: 'icon-shopping-cart',
-      text: 'This Month',
-      number: '$9,562',
-      no: '$542'
-    }
-  ];
-
-  images = [
-    {
-      src: 'assets/images/gallery-grid/img-grd-gal-1.jpg',
-      title: 'Old Scooter',
-      size: 'PNG-100KB'
-    },
-    {
-      src: 'assets/images/gallery-grid/img-grd-gal-2.jpg',
-      title: 'Wall Art',
-      size: 'PNG-150KB'
-    },
-    {
-      src: 'assets/images/gallery-grid/img-grd-gal-3.jpg',
-      title: 'Microphone',
-      size: 'PNG-150KB'
-    }
-  ];
 
   get pagedUsers() {
     const start = (this.currentPage - 1) * this.pageLimit;
@@ -121,7 +68,7 @@ export class Users {
     if (!this.searchTerm.trim())
       return this.users;
 
-    console.log("Search for " + this.searchTerm);
+    this.utilityService.print("Search for ", this.searchTerm);
 
     return this.users.filter(user =>
       user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -140,7 +87,7 @@ export class Users {
 
   goToPage(page: number) {
     this.currentPage = page;
-    console.log("Go to page: " + this.currentPage);
+    this.utilityService.print("Go to page: ", this.currentPage);
   }
 
   nextPage() {
@@ -150,7 +97,7 @@ export class Users {
   }
 
   onUpdate(user: any) {
-    console.log('Navigating to user details:', user);
+    this.utilityService.print('Navigating to user details:', user);
 
     this.userService.setUser(user);
 
@@ -168,6 +115,17 @@ export class Users {
 
   confirmDelete() {
     this.isModalOpen = false;
-    alert('Item deleted successfully!');
+    this.apiService.deleteUser(this.selectedUser.id).subscribe({
+      next: (response: BaseResponse) => {
+        this.utilityService.print('Delete user successfully:', response);
+        this.utilityService.showAlert(response.message, 'success');
+
+        this.users = this.users.filter(user => user.id !== this.selectedUser.id);
+      },
+      error: (error) => {
+        this.utilityService.print('Error:', error);
+        this.utilityService.showAlert(error.error.message, 'error');
+      }
+    });
   }
 }

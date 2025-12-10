@@ -1,3 +1,9 @@
+<div class="alert-popup" *ngIf="utilityService.alertMessage">
+    <div class="alert-box" [ngClass]="utilityService.alertType">
+        {{ utilityService.alertMessage }}
+    </div>
+</div>
+
 <div class="auth-wrapper">
   <div class="auth-content">
     <div class="card">

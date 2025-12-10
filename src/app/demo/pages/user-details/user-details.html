@@ -1,3 +1,9 @@
+<div class="alert-popup" *ngIf="utilityService.alertMessage">
+    <div class="alert-box" [ngClass]="utilityService.alertType">
+        {{ utilityService.alertMessage }}
+    </div>
+</div>
+
 <div class="row">
     @if (isLoading) {
     <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
@@ -71,9 +77,8 @@
                         <select name="grade" class="form-control" formControlName="grade" [(ngModel)]="user.grade"
                             ngModelOptions="{standalone: true}"
                             [ngClass]="{'is-invalid': submitted && f['grade'].invalid}">
-                            <option value="" selected>Select Grade</option>
-                            <option value="Grade 3">Grade 3</option>
-                            <option value="Grade 4">Grade 4</option>
+                            <option value="3" selected>Grade 3</option>
+                            <option value="4">Grade 4</option>
                         </select>
 
                         <div *ngIf="submitted && f['grade'].errors" class="invalid-feedback">
