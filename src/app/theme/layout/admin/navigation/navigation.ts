@@ -35,19 +35,27 @@ export const NavigationItems: NavigationItem[] = [
     ]
   },
   {
+    id: 'users',
+    title: 'Users',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'users',
+        title: 'Users',
+        type: 'item',
+        url: '/users',
+        classes: 'nav-item',
+        icon: 'feather icon-users'
+      }
+    ]
+  },
+  {
     id: 'attendance',
     title: 'Attendance',
     type: 'group',
     icon: 'icon-group',
     children: [
-      {
-        id: 'ma5domen',
-        title: 'Al Makhdomen',
-        type: 'item',
-        url: '/users',
-        classes: 'nav-item',
-        icon: 'feather icon-users'
-      },
       {
         id: 'takeAttendance',
         title: 'Take attendence',

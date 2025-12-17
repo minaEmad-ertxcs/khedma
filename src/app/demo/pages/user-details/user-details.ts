@@ -38,12 +38,18 @@ export class UserDetails implements OnInit {
       profileImage: [null]
     });
 
+    this.getUserById(this.userId);
+    // todo: get the image from api
+  }
+
+  getUserById(userId: any) {
     this.apiService.getUserById(this.userId)
       .subscribe({
         next: res => {
           this.utilityService.print("Get user successfully", res);
           this.user = res.data;
           this.isLoading = false;
+          this.utilityService.print("the image", this.previewImage);
         },
         error: err => console.error("Error", err)
       });

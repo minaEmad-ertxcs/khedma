@@ -18,6 +18,10 @@ export class UtilityService {
     }
   }
 
+  getBaseImagePath() {
+    return environment.baseImagePath;
+  }
+
   showAlert(message: string, type: 'success' | 'error') {
     this.alertMessage = message;
     this.alertType = type === 'success' ? 'alert-success' : 'alert-danger';

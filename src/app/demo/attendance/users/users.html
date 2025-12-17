@@ -50,7 +50,7 @@
 
     @if (!isLoading) {
     <div class="col-xl-12"> <!-- option 2 -->
-        <app-card cardTitle="Al Makhdomen" [options]="false" blockClass="table-border-style">
+        <app-card cardTitle="Users" [options]="false" blockClass="table-border-style">
             <div class="table-responsive">
 
                 <table class="table table-striped">
@@ -120,42 +120,4 @@
         </app-card>
     </div>
     }
-
-    <!-- <div class="col-xl-12">
-        <app-card cardTitle="Al Makhdomen" [options]="false" blockClass="table-border-style">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Full name</th>
-                            <th>Mobile phone</th>
-                            <th>Birth date</th>
-                            <th>Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (user of users; track user) {
-                        <tr>
-                            <th scope="row">{{ user.id }}</th>
-                            <td>{{ user.fullName }}</td>
-                            <td>{{ user.mobilePhone }}</td>
-                            <td>{{ user.birthDate }}</td>
-                            <td>
-                                <div class="checkbox-wrapper-31">
-                                    <input type="checkbox" id="{{ user.id }}" [(ngModel)]="user.isAttended" />
-                                    <svg viewBox="0 0 35.6 35.6">
-                                        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                                        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                                        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-                                    </svg>
-                                </div>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </app-card>
-    </div> -->
 </div>
