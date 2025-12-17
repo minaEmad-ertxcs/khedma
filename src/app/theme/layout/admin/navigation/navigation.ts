@@ -42,7 +42,7 @@ export const NavigationItems: NavigationItem[] = [
     children: [
       {
         id: 'users',
-        title: 'Users',
+        title: 'All Users',
         type: 'item',
         url: '/users',
         classes: 'nav-item',

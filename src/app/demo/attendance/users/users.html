@@ -5,7 +5,6 @@
 </div>
 
 <div class="row">
-
     <div class="modal" [class.show]="isModalOpen">
         <div class="modal-content">
             <h3>Confirm Delete</h3>
@@ -18,28 +17,7 @@
     </div>
 </div>
 
-
-
 <div class="row">
-    <!-- 
-    @for (card of cards; track card) {
-    <div class="col-md-6 col-xl-3">
-        <app-card [hidHeader]="true" cardClass="{{ card.background }} order-card">
-            <h6 class="text-white">{{ card.title }}</h6>
-            <h2 class="text-end text-white">
-                <i class="feather {{ card.icon }} float-start"></i>
-                <span>{{ card.number }}</span>
-            </h2>
-            <p class="m-b-0">
-                {{ card.text }}
-                <span class="float-end">{{ card.no }}</span>
-            </p>
-        </app-card>
-    </div>
-    } -->
-
-
-
     @if (isLoading) {
     <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
         <div class="text-muted text-center">
@@ -49,10 +27,96 @@
     }
 
     @if (!isLoading) {
-    <div class="col-xl-12"> <!-- option 2 -->
-        <app-card cardTitle="Users" [options]="false" blockClass="table-border-style">
-            <div class="table-responsive">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Users</h5>
 
+                <ng-content select="[card-actions]">
+                    <div class="d-flex justify-content-end align-items-end">
+                        <button class="btn btn-light-primary">
+                            <i class="feather icon-plus"></i>
+                        </button>
+                    </div>
+                </ng-content>
+            </div>
+
+            <div class="card-body">
+                <ng-content>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Full name</th>
+                                    <th>Username</th>
+                                    <th>Mobile phone</th>
+                                    <th>Birth date</th>
+                                    <th>Role</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (user of pagedUsers; track user) {
+                                <tr>
+                                    <th scope="row">{{ user.id }}</th>
+                                    <td>{{ user.fullName }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.mobileNumber }}</td>
+                                    <td>{{ user.birthDate }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td>
+                                        <img src="assets/images/user/avatar-4.jpg" class="img-radius wid-40"
+                                            alt="User-Profile-Image" />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-light-info m-1" (click)="onUpdate(user)">
+                                            <i class="feather icon-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-light-danger m-1" (click)="onDelete(user)">
+                                            <i class="feather icon-trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+                                @empty {
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        No users found.
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled" [class.disabled]="currentPage === 1">
+                                    <a class="page-link" href="javascript:" (click)="prevPage()">Previous</a>
+                                </li>
+
+                                @for (page of pages; track page) {
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:" [class.active]="page === currentPage"
+                                        (click)="goToPage(page)">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                                }
+
+                                <li class=" page-item" [class.disabled]="currentPage === totalPages">
+                                    <a class="page-link" href="javascript:" (click)="nextPage()">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </ng-content>
+            </div>
+        </div>
+
+
+        <!-- <app-card cardTitle="Users" [options]="false" blockClass="table-border-style">
+            <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -119,7 +183,7 @@
                     </ul>
                 </nav>
             </div>
-        </app-card>
+        </app-card> -->
     </div>
     }
 </div>

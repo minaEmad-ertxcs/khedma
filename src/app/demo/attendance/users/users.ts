@@ -50,13 +50,13 @@ export class Users {
         this.utilityService.print('Get Users successful:', response);
 
         this.users = response.data.content;
+        this.isLoading = false;
       },
       error: (error) => {
         this.utilityService.print('Error:', JSON.stringify(error));
+        this.isLoading = false;
       }
     });
-
-    this.isLoading = false;
   }
 
   get pagedUsers() {
