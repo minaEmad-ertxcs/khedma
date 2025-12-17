@@ -11,6 +11,7 @@ import { BaseResponse } from 'src/app/model/BaseResponse';
 @Component({
   selector: 'app-sign-in',
   standalone: true,
+  providers: [UtilityService],
   imports: [SharedModule, RouterModule, FormsModule],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
