@@ -80,7 +80,7 @@
                             @for (user of pagedUsers; track user) {
                             <tr>
                                 <th scope="row">{{ user.id }}</th>
-                                <td>{{ user.username }}</td>
+                                <td>{{ user.fullName }}</td>
 
                                 @for (attendance of user.attendances; track attendance) {
                                 <td>
