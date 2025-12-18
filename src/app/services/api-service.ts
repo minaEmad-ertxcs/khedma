@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BaseResponse } from '../model/BaseResponse';
+import { u } from '@angular/cdk/scrolling-module.d-C_w4tIrZ';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,18 @@ export class ApiService {
     const headers = this.getHeaders();
 
     return this.http.get<BaseResponse>(fullUrl, { headers });
+  }
+
+  getUserImageByUsername(username: any) {
+    const fullUrl = this.baseUrl + this.apiV1 + "/user/image/" + username
+
+    const headers = this.getHeaders();
+
+    // return this.http.get<BaseResponse>(fullUrl, { headers });
+    return this.http.get(fullUrl, {
+      headers,
+      responseType: 'blob'
+    });
   }
 
   getAttendanceByRange(body: any, args: any) {

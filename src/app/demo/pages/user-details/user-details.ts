@@ -39,42 +39,66 @@ export class UserDetails implements OnInit {
     });
 
     this.getUserById(this.userId);
-    // todo: get the image from api
   }
 
   getUserById(userId: any) {
-    this.apiService.getUserById(this.userId)
+    this.apiService.getUserById(userId)
       .subscribe({
         next: res => {
           this.utilityService.print("Get user successfully", res);
           this.user = res.data;
           this.isLoading = false;
-          this.utilityService.print("the image", this.previewImage);
+
+          this.getImageUserByUsername(this.user.username);
         },
         error: err => console.error("Error", err)
       });
   }
 
+  getImageUserByUsername(username: string) {
+    this.apiService.getUserImageByUsername(username).subscribe({
+      next: (blob: Blob) => {
+        this.previewImage = URL.createObjectURL(blob);
+      },
+      error: () => {
+        this.previewImage = 'assets/images/user/avatar-3.jpg';
+      }
+    });
+  }
+
+
   get f() {
     return this.form.controls;
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    if (!this.selectedFile) return;
+  // onFileSelected(event: any) {
+  //   this.selectedFile = event.target.files[0];
+  //   if (!this.selectedFile) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.previewImage = reader.result as string;
-    };
-    reader.readAsDataURL(this.selectedFile);
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.previewImage = reader.result as string;
+  //   };
+  //   reader.readAsDataURL(this.selectedFile);
 
-    this.form.patchValue({
-      profileImage: this.selectedFile
-    });
+  //   this.form.patchValue({
+  //     profileImage: this.selectedFile
+  //   });
 
-    this.form.get('profileImage')?.updateValueAndValidity();
+  //   this.form.get('profileImage')?.updateValueAndValidity();
+  // }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+    this.selectedFile = file;
+
+    // ✅ Instant preview
+    this.previewImage = URL.createObjectURL(file);
   }
+
 
   saveChanges() {
     this.submitted = true;

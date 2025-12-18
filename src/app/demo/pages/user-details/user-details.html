@@ -16,7 +16,7 @@
     @if (!isLoading) {
     <div class="col-md-4">
         <app-card cardTitle="Profile picture" [options]="false" blockClass="table-border-style" class="col-md-4">
-            <form enctype="multipart/form-data" class="d-flex justify-content-center">
+            <!-- <form enctype="multipart/form-data" class="d-flex justify-content-center">
                 <label for="fileToUpload">
                     <div class="profile-pic" [style.background-image]="'url(assets/images/user/avatar-3.jpg)'">
                         <span class="feather icon-camera"></span>
@@ -26,6 +26,17 @@
 
                 <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"
                     (change)="onFileSelected($event)" hidden />
+            </form> -->
+
+            <form enctype="multipart/form-data" class="d-flex justify-content-center">
+                <label for="fileToUpload" class="cursor-pointer">
+                    <div class="profile-pic" [style.background-image]="'url(' + previewImage + ')'">
+                        <span class="feather icon-camera"></span>
+                        <span>Change Image</span>
+                    </div>
+                </label>
+
+                <input type="file" id="fileToUpload" accept="image/*" (change)="onFileSelected($event)" hidden />
             </form>
 
         </app-card>
