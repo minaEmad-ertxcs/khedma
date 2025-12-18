@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 
 
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { NavSearchComponent } from './nav-search/nav-search.component';
+// import { NavSearchComponent } from './nav-search/nav-search.component';
 
 @Component({
   selector: 'app-nav-left',
-  imports: [SharedModule, NavSearchComponent],
+  imports: [SharedModule],
   templateUrl: './nav-left.component.html',
   styleUrls: ['./nav-left.component.scss']
 })

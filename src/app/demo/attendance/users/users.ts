@@ -128,4 +128,8 @@ export class Users {
       }
     });
   }
+
+  createUser() {
+    this.router.navigate(['/create-user']);
+  }
 }

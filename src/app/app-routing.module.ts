@@ -36,6 +36,10 @@ const routes: Routes = [
         loadComponent: () => import('./demo/pages/user-details/user-details').then((c) => c.UserDetails)
       },
       {
+        path: 'create-user',
+        loadComponent: () => import('./demo/pages/create-user/create-user').then((c) => c.CreateUser)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },
@@ -51,10 +55,6 @@ const routes: Routes = [
         path: 'tables',
         loadComponent: () => import('./demo/tables/tbl-bootstrap/tbl-bootstrap.component').then((c) => c.TblBootstrapComponent)
       },
-      // {
-      //   path: 'sample-page',
-      //   loadComponent: () => import('./demo/other/sample-page/sample-page.component').then((c) => c.SamplePageComponent)
-      // }
     ]
   },
   {

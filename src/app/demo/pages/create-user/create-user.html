@@ -1,0 +1,189 @@
+<div class="alert-popup" *ngIf="utilityService.alertMessage">
+    <div class="alert-box" [ngClass]="utilityService.alertType">
+        {{ utilityService.alertMessage }}
+    </div>
+</div>
+
+<div class="row">
+    @if (isLoading) {
+    <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="text-muted text-center">
+            <span class="loader"></span>
+        </div>
+    </div>
+    }
+
+    @if (!isLoading) {
+    <div class="col-md-4">
+        <app-card cardTitle="Profile picture" [options]="false" blockClass="table-border-style" class="col-md-4">
+            <form enctype="multipart/form-data" class="d-flex justify-content-center">
+                <label for="fileToUpload">
+                    <div class="profile-pic" [style.background-image]="'url(assets/images/user/avatar-3.jpg)'">
+                        <span class="feather icon-camera"></span>
+                        <span>Change Image</span>
+                    </div>
+                </label>
+
+                <!-- <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"
+                    (change)="onFileSelected($event)" hidden /> -->
+            </form>
+
+        </app-card>
+    </div>
+
+    <div class="col-md-8">
+        <app-card cardTitle="User info" [options]="false" blockClass="table-border-style" class="col-md-8">
+            <form [formGroup]="form" class="needs-validation" novalidate (ngSubmit)="onCreateUser()">
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Full name</label>
+                        <input type="text" class="form-control" name="fullName" placeholder="Full name"
+                            formControlName="fullName" [ngClass]="{'is-invalid': submitted && f['fullName'].invalid}" />
+
+                        <div *ngIf="submitted && f['fullName'].errors" class="invalid-feedback">
+                            <div *ngIf="f['fullName'].errors['required']">
+                                Please enter the Full name.
+                            </div>
+                            <div *ngIf="f['fullName'].errors['minlength']">
+                                Full Name must be at least 3 characters.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Username"
+                            formControlName="username" [ngClass]="{'is-invalid': submitted && f['username'].invalid}" />
+
+                        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                            <div *ngIf="f['username'].errors['required']">
+                                Please enter the Username.
+                            </div>
+                            <div *ngIf="f['username'].errors['minlength']">
+                                Username must be at least 3 characters.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Mobile number</label>
+                        <input type="text" name="mobileNumber" class="form-control" placeholder="Mobile number"
+                            formControlName="mobileNumber"
+                            [ngClass]="{'is-invalid': submitted && f['mobileNumber'].invalid}" />
+
+                        <div *ngIf="submitted && f['mobileNumber'].errors" class="invalid-feedback">
+                            <div *ngIf="f['mobileNumber'].errors['required']">
+                                Please enter the Mobile number.
+                            </div>
+                            <div *ngIf="f['mobileNumber'].errors['minlength']">
+                                Mobile number must be at least 11 characters.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="endDate" class="form-label fw-bold">Birth date</label>
+                        <input name="birthDate" type="date" class="form-control" formControlName="birthDate"
+                            [ngClass]="{'is-invalid': submitted && f['birthDate'].invalid}" />
+
+                        <div *ngIf="submitted && f['birthDate'].errors" class="invalid-feedback">
+                            <div *ngIf="f['birthDate'].errors['required']">
+                                Please enter the Brith date.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password"
+                            formControlName="password" [ngClass]="{'is-invalid': submitted && f['password'].invalid}" />
+
+                        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                            <div *ngIf="f['password'].errors['required']">
+                                Please enter the Password.
+                            </div>
+                            <div *ngIf="f['password'].errors['minlength']">
+                                Password must be at least 8 characters.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Confirm Password</label>
+                        <input type="password" class="form-control" formControlName="confirmPassword"
+                            placeholder="Confirm Password"
+                            [ngClass]="{'is-invalid': submitted && (f['confirmPassword'].invalid || f['confirmPassword'].errors?.['passwordMismatch'])}" />
+
+                        <div *ngIf="submitted && f['confirmPassword'].errors?.['passwordMismatch']"
+                            class="invalid-feedback">
+                            Confirm Password do not match.
+                        </div>
+
+                        <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                            <div *ngIf="f['confirmPassword'].errors['required']">
+                                Please enter the Confirm Password.
+                            </div>
+                            <div *ngIf="f['confirmPassword'].errors['minlength']">
+                                Confirm Password must be at least 8 characters.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Role</label>
+                        <select class="form-control" formControlName="role" (change)="onRoleChange($event)"
+                            [ngClass]="{'is-invalid': submitted && f['role'].invalid}">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+
+                        <div *ngIf="submitted && f['role'].errors" class="invalid-feedback">
+                            <div *ngIf="f['role'].errors['required']">
+                                Please enter the Role.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if(isUser) {
+                <div class="row">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">Grade</label>
+                        <select name="grade" class="form-control" formControlName="grade"
+                            ngModelOptions="{standalone: true}"
+                            [ngClass]="{'is-invalid': submitted && f['grade'].invalid}">
+                            <option value="3" selected>Grade 3</option>
+                            <option value="4">Grade 4</option>
+                        </select>
+
+                        <div *ngIf="submitted && f['grade'].errors" class="invalid-feedback">
+                            <div *ngIf="f['grade'].errors['required']">
+                                Please enter the Grade.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+
+                <div class="d-flex">
+                    <button class="btn btn-success" type="submit">Save</button>
+                </div>
+            </form>
+        </app-card>
+    </div>
+    }
+</div>

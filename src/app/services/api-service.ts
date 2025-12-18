@@ -51,6 +51,16 @@ export class ApiService {
     return this.http.post<BaseResponse>(fullUrl, body, { headers });
   }
 
+  createUser(body: any) {
+    const fullUrl = this.baseUrl + this.apiV1 + "/user/create"
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.post<BaseResponse>(fullUrl, body, { headers });
+  }
+
   updateUser(body: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/user"
 
