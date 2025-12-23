@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BaseResponse } from '../model/BaseResponse';
-import { u } from '@angular/cdk/scrolling-module.d-C_w4tIrZ';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +91,16 @@ export class ApiService {
     });
 
     return this.http.delete<BaseResponse>(fullUrl, { headers });
+  }
+
+  getDashboardStatus() {
+    const fullUrl = this.baseUrl + this.apiV1 + "/admin" + "/dashboard-stats"
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.get<BaseResponse>(fullUrl, { headers });
   }
 
   private getHeaders() {

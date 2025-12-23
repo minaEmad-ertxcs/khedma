@@ -1,161 +1,145 @@
 <div class="row">
-  <!-- order-card start -->
   @for (card of cards; track card) {
-    <div class="col-md-6 col-xl-3">
-      <app-card [hidHeader]="true" cardClass="{{ card.background }} order-card">
-        <h6 class="text-white">{{ card.title }}</h6>
-        <h2 class="text-end text-white">
-          <i class="feather {{ card.icon }} float-start"></i>
-          <span>{{ card.number }}</span>
-        </h2>
-        <p class="m-b-0">
-          {{ card.text }}
-          <span class="float-end">{{ card.no }}</span>
-        </p>
-      </app-card>
-    </div>
-  }
-  <!-- order-card end -->
-
-  <!-- account-section start -->
-  <div class="col-xl-6 col-md-12">
-    <app-card cardTitle="Unique Visitor" [options]="false">
-      <apx-chart
-        [chart]="chartOptions.chart!"
-        [dataLabels]="chartOptions.dataLabels!"
-        [stroke]="chartOptions.stroke!"
-        [series]="chartOptions.series!"
-        [xaxis]="chartOptions.xaxis!"
-        [colors]="chartOptions.colors!"
-        [fill]="chartOptions.fill!"
-        [markers]="chartOptions.markers!"
-        [yaxis]="chartOptions.yaxis!"
-      ></apx-chart>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="{{ card.background }} order-card">
+      <h6 class="text-white">{{ card.title }}</h6>
+      <h2 class="text-end text-white">
+        <i class="feather {{ card.icon }} float-start"></i>
+        <span>{{ card.number }}</span>
+      </h2>
+      <p class="m-b-0">
+        {{ card.text }}
+        <span class="float-end">{{ card.no }}</span>
+      </p>
     </app-card>
   </div>
+  }
+
   <div class="col-xl-6 col-md-12">
     <div class="row">
       <div class="col-md-6">
         <app-card [hidHeader]="true">
           <div class="row">
             <div class="col-auto">
-              <span>Customers</span>
+              <span>Users</span>
             </div>
             <div class="col text-end">
-              <h2 class="mb-0">826</h2>
-              <span class="text-c-green">
-                8.2%
-                <i class="feather icon-trending-up ms-1"></i>
-              </span>
+              <h2 class="mb-0">{{ details?.details?.usersOnly }}</h2>
             </div>
           </div>
-          <apx-chart
-            [series]="chartOptions_1.series!"
-            [chart]="chartOptions_1.chart!"
-            [stroke]="chartOptions_1.stroke!"
-            [dataLabels]="chartOptions_1.dataLabels!"
-            [labels]="chartOptions_1.labels!"
-            [legend]="chartOptions_1.legend!"
-            [colors]="chartOptions_1.colors!"
-            [fill]="chartOptions_1.fill!"
-            [grid]="chartOptions_1.grid!"
-            [plotOptions]="chartOptions_1.plotOptions!"
-            [tooltip]="chartOptions_1.tooltip!"
-          ></apx-chart>
+          <apx-chart *ngIf="userChart?.series" [series]="userChart.series!" [chart]="userChart.chart!"
+            [stroke]="userChart.stroke!" [dataLabels]="userChart.dataLabels!" [labels]="userChart.labels!"
+            [legend]="userChart.legend!" [colors]="userChart.colors!" [fill]="userChart.fill!" [grid]="userChart.grid!"
+            [plotOptions]="userChart.plotOptions!" [tooltip]="userChart.tooltip!"></apx-chart>
           <div class="row mt-3 text-center">
             <div class="col">
               <h3 class="m-0">
                 <i class="fas fa-circle f-10 m-r-5 text-success"></i>
-                674
+                {{details?.details?.activeUsersOnly}}
               </h3>
-              <span class="ms-3">New</span>
+              <span class="ms-3">Active</span>
             </div>
             <div class="col">
               <h3 class="m-0">
-                <i class="fas fa-circle text-primary f-10 m-r-5"></i>
-                182
+                <i class="fas fa-circle text-danger f-10 m-r-5"></i>
+                {{details?.details?.deletedUsersOnly}}
               </h3>
-              <span class="ms-3">Return</span>
+              <span class="ms-3">Deleted</span>
             </div>
           </div>
         </app-card>
       </div>
+
+
       <div class="col-md-6">
+        <app-card [hidHeader]="true">
+          <div class="row">
+            <div class="col-auto">
+              <span>Admin</span>
+            </div>
+            <div class="col text-end">
+              <h2 class="mb-0">{{ details?.details?.adminOnly }}</h2>
+            </div>
+          </div>
+          <apx-chart *ngIf="adminChart?.series" [series]="adminChart.series!" [chart]="adminChart.chart!"
+            [stroke]="adminChart.stroke!" [dataLabels]="adminChart.dataLabels!" [labels]="adminChart.labels!"
+            [legend]="adminChart.legend!" [colors]="adminChart.colors!" [fill]="adminChart.fill!" [grid]="adminChart.grid!"
+            [plotOptions]="adminChart.plotOptions!" [tooltip]="adminChart.tooltip!"></apx-chart>
+          <div class="row mt-3 text-center">
+            <div class="col">
+              <h3 class="m-0">
+                <i class="fas fa-circle f-10 m-r-5 text-success"></i>
+                {{details?.details?.activeAdminOnly}}
+              </h3>
+              <span class="ms-3">Active</span>
+            </div>
+            <div class="col">
+              <h3 class="m-0">
+                <i class="fas fa-circle text-danger f-10 m-r-5"></i>
+                {{details?.details?.deletedAdminOnly}}
+              </h3>
+              <span class="ms-3">Deleted</span>
+            </div>
+          </div>
+        </app-card>
+      </div>
+
+      <!-- <div class="col-md-6">
         <app-card [hidHeader]="true" cardClass="bg-primary text-white">
           <div class="row">
             <div class="col-auto">
-              <span>Customers</span>
+              <span>Admin</span>
             </div>
             <div class="col text-end">
-              <h2 class="mb-0 text-white">826</h2>
-              <span class="text-white">
-                8.2%
-                <i class="feather icon-trending-up ms-1"></i>
-              </span>
+              <h2 class="mb-0 text-white">{{ details?.details?.adminOnly }}</h2>
             </div>
           </div>
           <div id="customerChart">
-            <apx-chart
-              [series]="chartOptions_2.series!"
-              [chart]="chartOptions_2.chart!"
-              [stroke]="chartOptions_2.stroke!"
-              [dataLabels]="chartOptions_2.dataLabels!"
-              [labels]="chartOptions_2.labels!"
-              [legend]="chartOptions_2.legend!"
-              [colors]="chartOptions_2.colors!"
-              [fill]="chartOptions_2.fill!"
-              [grid]="chartOptions_2.grid!"
-              [plotOptions]="chartOptions_2.plotOptions!"
-              [tooltip]="chartOptions_2.tooltip!"
-            ></apx-chart>
+            <apx-chart *ngIf="adminChart?.series" [series]="adminChart.series!" [chart]="adminChart.chart!"
+              [stroke]="adminChart.stroke!" [dataLabels]="adminChart.dataLabels!" [labels]="adminChart.labels!"
+              [legend]="adminChart.legend!" [colors]="adminChart.colors!" [fill]="adminChart.fill!"
+              [grid]="adminChart.grid!" [plotOptions]="adminChart.plotOptions!"
+              [tooltip]="adminChart.tooltip!"></apx-chart>
           </div>
           <div class="row mt-3 text-center">
+
             <div class="col">
               <h3 class="m-0 text-white">
                 <i class="fas fa-circle f-10 m-r-5 text-white"></i>
-                674
+                {{details?.details?.activeAdminOnly}}
               </h3>
-              <span class="ms-3">New</span>
+              <span class="ms-3">Active</span>
             </div>
+
             <div class="col">
               <h3 class="m-0 text-white">
                 <i class="fas fa-circle text-white f-10 m-r-5"></i>
-                182
+                {{details?.details?.deletedAdminOnly}}
               </h3>
-              <span class="ms-3">Return</span>
+              <span class="ms-3">Deleted</span>
             </div>
+
           </div>
         </app-card>
-      </div>
+      </div> -->
     </div>
   </div>
 
-  <div class="col-md-12 col-lg-4">
-    <app-card
-      [hidHeader]="true"
-      cardClass="seo-card"
-      blockClass="seo-statustic"
-      footerClass="seo-chart border border-top-0 p-0 overflow-hidden"
-      [isCardFooter]="true"
-    >
+  <!-- <div class="col-md-12 col-lg-4">
+    <app-card [hidHeader]="true" cardClass="seo-card" blockClass="seo-statustic"
+      footerClass="seo-chart border border-top-0 p-0 overflow-hidden" [isCardFooter]="true">
       <i class="feather icon-save f-20 text-c-red"></i>
       <h5 class="mb-1">65%</h5>
       <p>Memory</p>
       <div class="app-card-footer">
-        <apx-chart
-          [series]="chartOptions_3.series!"
-          [chart]="chartOptions_3.chart!"
-          [stroke]="chartOptions_3.stroke!"
-          [dataLabels]="chartOptions_3.dataLabels!"
-          [colors]="chartOptions_3.colors!"
-          [fill]="chartOptions_3.fill!"
-          [tooltip]="chartOptions_3.tooltip!"
-          [yaxis]="chartOptions_3.yaxis!"
-        ></apx-chart>
+        <apx-chart *ngIf="chartOptions_3?.series" [series]="chartOptions_3.series!" [chart]="chartOptions_3.chart!" [stroke]="chartOptions_3.stroke!"
+          [dataLabels]="chartOptions_3.dataLabels!" [colors]="chartOptions_3.colors!" [fill]="chartOptions_3.fill!"
+          [tooltip]="chartOptions_3.tooltip!" [yaxis]="chartOptions_3.yaxis!"></apx-chart>
       </div>
     </app-card>
-  </div>
-  <div class="col-md-6 col-lg-4">
+  </div> -->
+
+  <!-- <div class="col-md-6 col-lg-4">
     <app-card [hidHeader]="true" blockClass="text-center">
       <i class="fa fa-envelope-open text-c-blue d-block f-40"></i>
       <h4 class="m-t-20">
@@ -165,8 +149,9 @@
       <p class="m-b-20">Your main list is growing</p>
       <button class="btn btn-primery btn-sm btn-round">Manage List</button>
     </app-card>
-  </div>
-  <div class="col-md-6 col-lg-4">
+  </div> -->
+
+  <!-- <div class="col-md-6 col-lg-4">
     <app-card [hidHeader]="true" blockClass="text-center">
       <i class="fab fa-twitter text-c-green d-block f-40"></i>
       <h4 class="m-t-20">
@@ -176,11 +161,9 @@
       <p class="m-b-20">Your main list is growing</p>
       <button class="btn btn-success btn-sm btn-round">Check Theme Out</button>
     </app-card>
-  </div>
-  <!-- account-section end -->
+  </div> -->
 
-  <!-- conversion-section start -->
-  <div class="col-lg-4 col-md-12">
+  <!-- <div class="col-lg-4 col-md-12">
     <app-card [hidHeader]="true" footerClass="border border-top-0 p-0 overflow-hidden" [isCardFooter]="true">
       <h6>Conversions</h6>
       <h4 class="m-0">
@@ -217,8 +200,9 @@
       <span>Purchased</span>
       <div class="app-card-footer"></div>
     </app-card>
-  </div>
-  <div class="col-lg-8 col-md-12">
+  </div> -->
+
+  <!-- <div class="col-lg-8 col-md-12">
     <app-card cardTitle="Activity Feed" blockClass="m-t-10" [options]="false">
       <ul class="feed-blog ps-0">
         <li class="active-feed">
@@ -233,18 +217,19 @@
           <p class="m-b-15 m-t-15">
             hii
             <b>&#64;everone</b>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy
             text ever since the 1500s.
           </p>
           <div class="row">
             @for (image of images; track image) {
-              <div class="col-auto text-center">
-                <img src="{{ image.src }}" alt="img" class="img-fluid wid-100" />
-                <h6 class="m-t-15 m-b-0">{{ image.title }}</h6>
-                <p class="text-muted m-b-0">
-                  <small>{{ image.size }}</small>
-                </p>
-              </div>
+            <div class="col-auto text-center">
+              <img src="{{ image.src }}" alt="img" class="img-fluid wid-100" />
+              <h6 class="m-t-15 m-b-0">{{ image.title }}</h6>
+              <p class="text-muted m-b-0">
+                <small>{{ image.size }}</small>
+              </p>
+            </div>
             }
           </div>
         </li>
@@ -272,15 +257,16 @@
           <p class="m-b-15 m-t-15">
             hii
             <b>&#64;everone</b>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy
             text ever since the 1500s.
           </p>
         </li>
       </ul>
     </app-card>
-  </div>
-  <!-- conversion-section end -->
-  <div class="col-md-12">
+  </div> -->
+
+  <!-- <div class="col-md-12">
     <app-card cardTitle="Campaign Monitor" cardClass="tab-card tab-content" blockClass="nav-fill" [options]="false">
       <ul ngbNav #nav="ngbNav" aria-busy="true" class="nav-pills">
         <li [ngbNavItem]="1" class="flex">
@@ -324,5 +310,5 @@
       </ul>
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </app-card>
-  </div>
+  </div> -->
 </div>
