@@ -43,7 +43,7 @@ export class Users {
   getUsers() {
     const args = {
       page: this.currentPage - 1,
-      size: 5
+      size: this.pageLimit
     }
 
     this.apiService.getUsers(args).subscribe({

@@ -30,6 +30,7 @@ export class TakeAttendance {
   searchForm!: FormGroup;
   submitted = false;
   users: any[] = [];
+  totalPages: any;
 
   constructor(private fb: FormBuilder, public utilityService: UtilityService, private apiService: ApiService) { }
 
@@ -48,8 +49,8 @@ export class TakeAttendance {
     }
 
     const args = {
-      page: 0,
-      size: 5
+      page: this.currentPage - 1,
+      size: this.pageLimit
     }
 
     const body = {
@@ -63,15 +64,21 @@ export class TakeAttendance {
       next: (response: any) => {
         this.utilityService.print('Get attendance successfully:', response);
 
-        this.users = response.data.content;
+        const pageData = response.data;
+
+        this.users = pageData.content;
+        this.totalPages = pageData.totalPages;
+        this.totalElements = pageData.totalElements;
+
+        this.pages = Array.from(
+          { length: this.totalPages },
+          (_, i) => i + 1
+        );
       },
       error: (error) => {
         this.utilityService.print('Somthing went wrong:', error);
       }
     });
-
-    this.totalElements = this.users.length;
-    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
   get f() {
@@ -79,39 +86,41 @@ export class TakeAttendance {
   }
 
   get pagedUsers() {
-    const start = (this.currentPage - 1) * this.pageLimit;
-    return this.filteredUsers.slice(start, start + this.pageLimit);
+    return this.users;
   }
 
-  get filteredUsers() {
-    if (!this.searchTerm.trim())
-      return this.users;
+  // get filteredUsers() {
+  //   if (!this.searchTerm.trim())
+  //     return this.users;
 
-    this.utilityService.print("Search for ", this.searchTerm);
+  //   this.utilityService.print("Search for ", this.searchTerm);
 
-    return this.users.filter(user =>
-      user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
+  //   return this.users.filter(user =>
+  //     user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //   );
+  // }
 
-  get totalPages() {
-    return Math.ceil(this.filteredUsers.length / this.pageLimit);
-  }
+  // get totalPages() {
+  //   return Math.ceil(this.filteredUsers.length / this.pageLimit);
+  // }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.getAttendanceByRanges();
     }
   }
 
   goToPage(page: number) {
     this.currentPage = page;
     this.utilityService.print("Go to page: " + this.currentPage);
+    this.getAttendanceByRanges();
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.getAttendanceByRanges();
     }
   }
 
