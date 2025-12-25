@@ -241,11 +241,7 @@ export class DashAnalyticsComponent {
         this.utilityService.print('Error:', error);
         this.utilityService.showAlert(error.error.message, 'error');
 
-        if (error.status === 401) {
-          localStorage.clear();
-          this.router.navigateByUrl('/login', { replaceUrl: true });
-          return;
-        }
+        this.utilityService.isUnauthenticated(error);
       }
     });
   }

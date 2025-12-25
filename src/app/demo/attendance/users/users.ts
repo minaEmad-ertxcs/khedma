@@ -26,6 +26,7 @@ export class Users {
   isLoading = false;
 
   // vars
+  totalPages: any;
   pages: any;
   searchTerm = '';
   totalElements: number = 0;
@@ -41,7 +42,7 @@ export class Users {
 
   getUsers() {
     const args = {
-      page: 0,
+      page: this.currentPage - 1,
       size: 5
     }
 
@@ -49,50 +50,61 @@ export class Users {
       next: (response: BaseResponse) => {
         this.utilityService.print('Get Users successful:', response);
 
-        this.users = response.data.content;
+        const pageData = response.data;
+
+        this.users = pageData.content;
+        this.totalPages = pageData.totalPages;
+        this.totalElements = pageData.totalElements;
+
+        this.pages = Array.from(
+          { length: this.totalPages },
+          (_, i) => i + 1
+        );
+
         this.isLoading = false;
       },
       error: (error) => {
         this.utilityService.print('Error:', JSON.stringify(error));
+
+        this.utilityService.isUnauthenticated(error);
+
         this.isLoading = false;
       }
     });
   }
 
   get pagedUsers() {
-    const start = (this.currentPage - 1) * this.pageLimit;
-    return this.filteredUsers.slice(start, start + this.pageLimit);
+    return this.users;
   }
 
-  get filteredUsers() {
-    if (!this.searchTerm.trim())
-      return this.users;
+  // get filteredUsers() {
+  //   if (!this.searchTerm.trim())
+  //     return this.users;
 
-    this.utilityService.print("Search for ", this.searchTerm);
+  //   this.utilityService.print("Search for ", this.searchTerm);
 
-    return this.users.filter(user =>
-      user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
-
-  get totalPages() {
-    return Math.ceil(this.filteredUsers.length / this.pageLimit);
-  }
+  //   return this.users.filter(user =>
+  //     user.fullName.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //   );
+  // }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.getUsers();
     }
   }
 
   goToPage(page: number) {
     this.currentPage = page;
     this.utilityService.print("Go to page: ", this.currentPage);
+    this.getUsers();
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.getUsers();
     }
   }
 

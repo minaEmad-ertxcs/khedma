@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class UtilityService {
   alertType: string = '';
   alertTimeout: any;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   print(staticMassage?: String, message?: any) {
     if (environment.production != true) {
@@ -34,5 +35,13 @@ export class UtilityService {
       this.alertMessage = null;
       this.alertTimeout = null;
     }, 3000);
+  }
+
+  isUnauthenticated(error: any) {
+    if (error.status === 401) {
+      localStorage.clear();
+      this.router.navigateByUrl('/login', { replaceUrl: true });
+      return;
+    }
   }
 }

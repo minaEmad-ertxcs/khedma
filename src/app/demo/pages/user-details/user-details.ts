@@ -58,10 +58,8 @@ export class UserDetails implements OnInit {
   getImageUserByUsername(username: string) {
     this.apiService.getUserImageByUsername(username).subscribe({
       next: (blob: Blob) => {
-        this.previewImage = URL.createObjectURL(blob);
-      },
-      error: () => {
-        this.previewImage = 'assets/images/user/avatar-3.jpg';
+        const timestamp = new Date().getTime();
+        this.previewImage = URL.createObjectURL(blob) + `?t=${timestamp}`;
       }
     });
   }
@@ -71,23 +69,6 @@ export class UserDetails implements OnInit {
     return this.form.controls;
   }
 
-  // onFileSelected(event: any) {
-  //   this.selectedFile = event.target.files[0];
-  //   if (!this.selectedFile) return;
-
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     this.previewImage = reader.result as string;
-  //   };
-  //   reader.readAsDataURL(this.selectedFile);
-
-  //   this.form.patchValue({
-  //     profileImage: this.selectedFile
-  //   });
-
-  //   this.form.get('profileImage')?.updateValueAndValidity();
-  // }
-
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
@@ -95,10 +76,8 @@ export class UserDetails implements OnInit {
     const file = input.files[0];
     this.selectedFile = file;
 
-    // ✅ Instant preview
     this.previewImage = URL.createObjectURL(file);
   }
-
 
   saveChanges() {
     this.submitted = true;
