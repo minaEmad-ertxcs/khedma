@@ -58,8 +58,7 @@ export class UserDetails implements OnInit {
   getImageUserByUsername(username: string) {
     this.apiService.getUserImageByUsername(username).subscribe({
       next: (blob: Blob) => {
-        const timestamp = new Date().getTime();
-        this.previewImage = URL.createObjectURL(blob) + `?t=${timestamp}`;
+        this.previewImage = URL.createObjectURL(blob);
       }
     });
   }

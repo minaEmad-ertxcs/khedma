@@ -1,4 +1,14 @@
 <div class="row">
+
+  @if (isLoading) {
+  <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="text-muted text-center">
+      <span class="loader"></span>
+    </div>
+  </div>
+  }
+
+  @if (!isLoading) {
   @for (card of cards; track card) {
   <div class="col-md-6 col-xl-3">
     <app-card [hidHeader]="true" cardClass="{{ card.background }} order-card">
@@ -63,8 +73,9 @@
           </div>
           <apx-chart *ngIf="adminChart?.series" [series]="adminChart.series!" [chart]="adminChart.chart!"
             [stroke]="adminChart.stroke!" [dataLabels]="adminChart.dataLabels!" [labels]="adminChart.labels!"
-            [legend]="adminChart.legend!" [colors]="adminChart.colors!" [fill]="adminChart.fill!" [grid]="adminChart.grid!"
-            [plotOptions]="adminChart.plotOptions!" [tooltip]="adminChart.tooltip!"></apx-chart>
+            [legend]="adminChart.legend!" [colors]="adminChart.colors!" [fill]="adminChart.fill!"
+            [grid]="adminChart.grid!" [plotOptions]="adminChart.plotOptions!"
+            [tooltip]="adminChart.tooltip!"></apx-chart>
           <div class="row mt-3 text-center">
             <div class="col">
               <h3 class="m-0">
@@ -311,4 +322,5 @@
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </app-card>
   </div> -->
+  }
 </div>

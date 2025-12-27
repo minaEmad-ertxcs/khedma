@@ -25,6 +25,7 @@ export class DashAnalyticsComponent {
   chartOptions_3!: Partial<ApexOptions>;
 
   details: any = null;
+  isLoading = false;
 
   constructor(private apiService: ApiService, public utilityService: UtilityService, private router: Router) {
     // this.chartOptions = {
@@ -226,6 +227,7 @@ export class DashAnalyticsComponent {
   }
 
   getDashBoardStats() {
+    this.isLoading = true;
     this.apiService.getDashboardStatus().subscribe({
       next: (response: BaseResponse) => {
         this.utilityService.print('Success:', response);
@@ -236,6 +238,7 @@ export class DashAnalyticsComponent {
         this.getAdminChart();
 
         this.utilityService.showAlert(response.message, 'success');
+        this.isLoading = false;
       },
       error: (error) => {
         this.utilityService.print('Error:', error);
