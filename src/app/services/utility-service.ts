@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -44,4 +45,38 @@ export class UtilityService {
       return;
     }
   }
+
+  isTokenExpired(): boolean {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    if (!token) return true;
+
+    const decoded: any = jwtDecode(token);
+    console.log(decoded);
+    console.log(decoded.exp * 1000 < Date.now());
+    return decoded.exp * 1000 < Date.now();
+  }
+
+  getUserInfo() {
+    if (!this.isTokenExpired()) {
+      const token = localStorage.getItem('token');
+
+
+      if (!token) return null;
+
+      const decoded: any = jwtDecode(token);
+
+      return {
+        username: decoded.sub,
+        fullName: decoded.fullName,
+        email: decoded.email,
+        phoneNumber: decoded.phoneNumber,
+        issuedAt: decoded.iat,
+        expiresAt: decoded.exp
+      };
+    } else {
+      return null;
+    }
+  }
+
 }

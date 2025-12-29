@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 
 
 import { SpinnerComponent } from './theme/shared/components/spinner/spinner.component';
+import { ThemeService } from './services/theme-service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,9 @@ import { SpinnerComponent } from './theme/shared/components/spinner/spinner.comp
 export class AppComponent implements OnInit {
   private router = inject(Router);
 
-  // life cycle event
+  constructor(private themeService: ThemeService) { }
+
+
   ngOnInit() {
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
@@ -22,5 +25,7 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+
+    this.themeService.loadTheme();
   }
 }

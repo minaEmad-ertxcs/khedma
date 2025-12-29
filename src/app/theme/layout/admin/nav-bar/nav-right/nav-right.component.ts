@@ -7,7 +7,10 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ChatUserListComponent } from './chat-user-list/chat-user-list.component';
 import { ChatMsgComponent } from './chat-msg/chat-msg.component';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { UtilityService } from 'src/app/services/utility-service';
+import { ThemeService } from 'src/app/services/theme-service';
 
 @Component({
   selector: 'app-nav-right',
@@ -27,20 +30,22 @@ import { Route, Router } from '@angular/router';
   ]
 })
 export class NavRightComponent {
-  
+
   visibleUserList: boolean;
   chatMessage: boolean;
   friendId!: number;
   router: any;
 
-  constructor() {
+  user: any;
+
+  constructor(private utilityService: UtilityService, public themeService: ThemeService, ) {
     this.router = inject(Router);
     this.visibleUserList = false;
     this.chatMessage = false;
+    this.user = this.utilityService.getUserInfo();
+    this.utilityService.print(this.user);
   }
 
-  
-  
   onChatToggle(friendID: any) {
     this.friendId = friendID;
     this.chatMessage = !this.chatMessage;
@@ -48,8 +53,6 @@ export class NavRightComponent {
 
   logout() {
     localStorage.removeItem('token');
-    // Optionally remove other user info
-    // localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }
