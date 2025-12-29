@@ -63,7 +63,6 @@ export class UserDetails implements OnInit {
     });
   }
 
-
   get f() {
     return this.form.controls;
   }

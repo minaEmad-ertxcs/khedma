@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UtilityService } from 'src/app/services/utility-service';
 import { ThemeService } from 'src/app/services/theme-service';
+import { ApiService } from 'src/app/services/api-service';
+import { BaseResponse } from 'src/app/model/BaseResponse';
 
 @Component({
   selector: 'app-nav-right',
@@ -37,18 +39,57 @@ export class NavRightComponent {
   router: any;
 
   user: any;
+  userInfo: any;
+  previewImage: any;
 
-  constructor(private utilityService: UtilityService, public themeService: ThemeService, ) {
+  constructor(private utilityService: UtilityService, public themeService: ThemeService, private apiService: ApiService) {
     this.router = inject(Router);
     this.visibleUserList = false;
     this.chatMessage = false;
     this.user = this.utilityService.getUserInfo();
     this.utilityService.print(this.user);
+    this.getUserProfile();
+    this.getUserImageProfile();
   }
 
   onChatToggle(friendID: any) {
     this.friendId = friendID;
     this.chatMessage = !this.chatMessage;
+  }
+
+  getUserProfile() {
+    this.apiService.getUserProfile().subscribe({
+      next: (response: BaseResponse) => {
+        this.utilityService.print('Success:', response);
+
+        this.userInfo = response.data;
+
+        this.utilityService.showAlert(response.message, 'success');
+      },
+      error: (error) => {
+        this.utilityService.print('Error:', error);
+        this.utilityService.showAlert(error.error.message, 'error');
+        this.utilityService.isUnauthenticated(error);
+      }
+    });
+  }
+
+  getUserImageProfile() {
+    this.apiService.getUserImageProfile().subscribe({
+      next: (blob: Blob) => {
+        this.previewImage = URL.createObjectURL(blob);
+      },
+      error: (error) => {
+        this.utilityService.print('Error:', error);
+        this.utilityService.showAlert(error.error.message, 'error');
+
+        this.utilityService.isUnauthenticated(error);
+      }
+    });
+  }
+
+  getProfileDetails() {
+    this.router.navigate(['/user-details'])
   }
 
   logout() {

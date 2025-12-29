@@ -16,7 +16,21 @@ export class ApiService {
 
   login(body: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/auth/login"
+
     return this.http.post<BaseResponse>(fullUrl, body);
+  }
+
+  getUserProfile() {
+    const fullUrl = this.baseUrl + this.apiV1 + "/auth/me"
+    const headers = this.getHeaders();
+
+    return this.http.get<BaseResponse>(fullUrl, { headers });
+  }
+
+  getUserImageProfile() {
+    const fullUrl = this.baseUrl + this.apiV1 + "/auth/image/me"
+    const headers = this.getHeaders();
+    return this.http.get(fullUrl, { headers, responseType: 'blob' });
   }
 
   getUsers(args: any) {
@@ -37,14 +51,9 @@ export class ApiService {
 
   getUserImageByUsername(username: any) {
     const fullUrl = this.baseUrl + this.apiV1 + "/user/image/" + username
-
     const headers = this.getHeaders();
 
-    // return this.http.get<BaseResponse>(fullUrl, { headers });
-    return this.http.get(fullUrl, {
-      headers,
-      responseType: 'blob'
-    });
+    return this.http.get(fullUrl, { headers, responseType: 'blob' });
   }
 
   getAttendanceByRange(body: any, args: any) {
