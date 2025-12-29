@@ -48,12 +48,12 @@ export class UtilityService {
 
   isTokenExpired(): boolean {
     const token = localStorage.getItem('token');
-    console.log(token);
+    this.print("", token);
     if (!token) return true;
 
     const decoded: any = jwtDecode(token);
-    console.log(decoded);
-    console.log(decoded.exp * 1000 < Date.now());
+    this.print(decoded);
+    this.print("", decoded.exp * 1000 < Date.now());
     return decoded.exp * 1000 < Date.now();
   }
 

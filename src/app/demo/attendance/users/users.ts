@@ -41,6 +41,7 @@ export class Users {
   }
 
   getUsers() {
+    this.isLoading = true;
     const args = {
       page: this.currentPage - 1,
       size: this.pageLimit

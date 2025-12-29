@@ -110,7 +110,7 @@ export class UserDetails implements OnInit {
           this.utilityService.showAlert(res.message, "success");
         },
         error: err => {
-          console.log("Errors", err);
+          this.utilityService.print("Errors", err);
           this.utilityService.showAlert(err.error.message, "error");
         }
       });
