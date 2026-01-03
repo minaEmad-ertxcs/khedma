@@ -19,6 +19,7 @@ import { BaseResponse } from 'src/app/model/BaseResponse';
 export class SignInComponent {
   loginForm!: FormGroup;
   submitted = false;
+  isLoading: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder, public utilityService: UtilityService) { }
 
@@ -35,6 +36,7 @@ export class SignInComponent {
 
   onSubmit() {
     this.submitted = true;
+    this.isLoading = true;
 
     if (this.loginForm.invalid) {
       return;
@@ -53,10 +55,12 @@ export class SignInComponent {
 
         localStorage.setItem('token', response.data.access_token);
         this.router.navigate(['/analytics']);
+        this.isLoading = false;
       },
       error: (error) => {
         this.utilityService.print('Login failed:', error.error);
         this.utilityService.showAlert(error.error.message, 'error');
+        this.isLoading = false;
       }
     });
   }

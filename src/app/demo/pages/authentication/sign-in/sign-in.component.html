@@ -1,11 +1,21 @@
 <div class="alert-popup" *ngIf="utilityService.alertMessage">
-    <div class="alert-box" [ngClass]="utilityService.alertType">
-        {{ utilityService.alertMessage }}
-    </div>
+  <div class="alert-box" [ngClass]="utilityService.alertType">
+    {{ utilityService.alertMessage }}
+  </div>
 </div>
 
 <div class="auth-wrapper">
   <div class="auth-content">
+
+    @if (isLoading) {
+    <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+      <div class="text-muted text-center">
+        <span class="loader"></span>
+      </div>
+    </div>
+    }
+
+    @if (!isLoading) {
     <div class="card">
       <div class="row align-items-center text-center">
         <div class="col-md-12">
@@ -48,9 +58,9 @@
               </div>
 
               <div class="d-grid">
-                <button class="btn btn-block btn-primary mb-4">SignIn</button>
+                <button class="btn btn-block btn-primary mb-4">Login</button>
               </div>
-              
+
             </form>
 
             <!-- <div class="form-group text-start mt-2">
@@ -74,5 +84,6 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </div>
